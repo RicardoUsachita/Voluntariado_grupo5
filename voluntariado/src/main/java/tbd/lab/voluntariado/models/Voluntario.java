@@ -2,7 +2,7 @@ package tbd.lab.voluntariado.models;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import java.util.Date;
+import java.sql.Date;
 
 @EntityScan
 public class Voluntario {
