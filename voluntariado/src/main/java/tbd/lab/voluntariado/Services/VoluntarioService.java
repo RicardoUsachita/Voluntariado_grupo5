@@ -1,10 +1,8 @@
-package tbd.lab.voluntariado.services;
+package tbd.lab.voluntariado.Services;
 
-import tbd.lab.voluntariado.repositories.VoluntarioRepository;
+import tbd.lab.voluntariado.Repositories.VoluntarioRepository;
 import org.springframework.web.bind.annotation.*;
-import tbd.lab.voluntariado.models.Tarea;
-import tbd.lab.voluntariado.models.Voluntario;
-import tbd.lab.voluntariado.repositories.TareaRepository;
+import tbd.lab.voluntariado.Models.Voluntario;
 
 import java.util.List;
 @CrossOrigin(origins = "*")
@@ -12,7 +10,7 @@ import java.util.List;
 @RequestMapping(value = "/")
 public class VoluntarioService {
     //Se hace uso de REST para la implementacion de las direciones para obtener los servicios.
-    private final tbd.lab.voluntariado.repositories.VoluntarioRepository VoluntarioRepository;
+    private final tbd.lab.voluntariado.Repositories.VoluntarioRepository VoluntarioRepository;
     VoluntarioService(VoluntarioRepository VoluntarioRepository){ this.VoluntarioRepository = VoluntarioRepository; }
 
     @PostMapping("/voluntarios")

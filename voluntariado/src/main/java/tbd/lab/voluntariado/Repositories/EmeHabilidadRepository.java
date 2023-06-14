@@ -1,6 +1,6 @@
-package tbd.lab.voluntariado.repositories;
+package tbd.lab.voluntariado.Repositories;
 
-import tbd.lab.voluntariado.models.EmeHabilidad;
+import tbd.lab.voluntariado.Models.EmeHabilidad;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package tbd.lab.voluntariado.services;
+package tbd.lab.voluntariado.Services;
 
 import org.springframework.web.bind.annotation.*;
-import tbd.lab.voluntariado.models.Tarea;
-import tbd.lab.voluntariado.repositories.TareaRepository;
+import tbd.lab.voluntariado.Models.Tarea;
+import tbd.lab.voluntariado.Repositories.TareaRepository;
 
 import java.util.List;
 

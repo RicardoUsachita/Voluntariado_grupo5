@@ -1,6 +1,6 @@
-package tbd.lab.voluntariado.repositories;
+package tbd.lab.voluntariado.Repositories;
 
-import tbd.lab.voluntariado.models.Voluntario;
+import tbd.lab.voluntariado.Models.Voluntario;
 
 import java.util.List;
 

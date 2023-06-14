@@ -1,4 +1,4 @@
-package tbd.lab.voluntariado.repositories;
+package tbd.lab.voluntariado.Repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
-import tbd.lab.voluntariado.models.Ranking;
-import tbd.lab.voluntariado.services.TareaService;
-import tbd.lab.voluntariado.services.VoluntarioService;
+import tbd.lab.voluntariado.Models.Ranking;
+import tbd.lab.voluntariado.Services.TareaService;
+import tbd.lab.voluntariado.Services.VoluntarioService;
 
 import java.util.List;
 

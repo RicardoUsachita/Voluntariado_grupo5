@@ -1,4 +1,4 @@
-package tbd.lab.voluntariado.repositories;
+package tbd.lab.voluntariado.Repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
-import tbd.lab.voluntariado.models.EmeHabilidad;
+import tbd.lab.voluntariado.Models.EmeHabilidad;
 
 import java.util.List;
 

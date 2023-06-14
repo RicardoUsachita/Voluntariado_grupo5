@@ -1,4 +1,4 @@
-package tbd.lab.voluntariado.models;
+package tbd.lab.voluntariado.Models;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
