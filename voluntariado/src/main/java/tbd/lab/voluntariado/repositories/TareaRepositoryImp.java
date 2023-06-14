@@ -52,23 +52,22 @@ public class TareaRepositoryImp implements TareaRepository{
             System.out.println("Tarea:"+tarea);
             System.out.println("Longitud : "+tarea.getLongitud()+" Latitud : "+tarea.getLatitud());
             System.out.println("myId = "+myId);
-            final String query = "insert into tarea (id,nombre,descrip,cant_vol_requeridos,cant_vol_inscritos,id_emergencia,finicio,ffin,id_estado,longitud,latitud,geom)" +
-                    " values (:myId,:nombre,:descrip,:cant_vol_req,:cant_vol_inscritos,:id_emergencia,:finicio,:ffin,:id_estado,:longitud,:latitud,ST_MakePoint(:longitud,:latitud))";
+            final String query = "insert into tarea (id,nombre,descrip,id_emergencia,finicio,id_estado,longitud,latitud,geom)" +
+                    " values (:myId,:nombre,:descrip,:id_emergencia,:finicio,:id_estado,:longitud,:latitud,ST_MakePoint(:longitud,:latitud))";
             try (Connection conn = sql2o.open()) {
                 System.out.println("Entro dentro de try 2...");
                 conn.createQuery(query)
                         .addParameter("myId", myId)
                         .addParameter("nombre", tarea.getNombre())
                         .addParameter("descrip", tarea.getDescripcion())
-                        .addParameter("cant_vol_req", tarea.getCant_vol_requeridos())
-                        .addParameter("cant_vol_inscritos", tarea.getCant_vol_inscritos())
+
                         .addParameter("id_emergencia", tarea.getId_emergencia())
                         .addParameter("finicio", tarea.getFinicio())
-                        .addParameter("ffin", tarea.getFfin())
+
                         .addParameter("id_estado", tarea.getId_estado())
                         .addParameter("latitud", tarea.getLatitud())
                         .addParameter("longitud", tarea.getLongitud())
-                        //.addParameter("geom", tarea.getGeom())
+                        .addParameter("geom", tarea.getGeom())
                         .executeUpdate();
                 System.out.println("Entro dentro de try 3...");
                 return tarea;
@@ -137,11 +136,9 @@ public class TareaRepositoryImp implements TareaRepository{
                         .addParameter("id", tarea.getId())
                         .addParameter("nombre", tarea.getNombre())
                         .addParameter("descrip", tarea.getDescripcion())
-                        .addParameter("cant_vol_req", tarea.getCant_vol_requeridos())
-                        .addParameter("cant_vol_inscritos", tarea.getCant_vol_inscritos())
+
                         .addParameter("id_emergencia", tarea.getId_emergencia())
                         .addParameter("finicio", tarea.getFinicio())
-                        .addParameter("ffin", tarea.getFfin())
                         .addParameter("id_estado", tarea.getId_estado())
                         .addParameter("latitud", tarea.getLatitud())
                         .addParameter("longitud", tarea.getLongitud())
@@ -206,8 +203,8 @@ public class TareaRepositoryImp implements TareaRepository{
 
     @Override
     public List<Tarea> getTareasByIdRegion(Integer idRegion) {
-        final String query = "SELECT tarea.id, tarea.nombre, tarea.descrip, tarea.cant_vol_requeridos, " +
-                "tarea.cant_vol_inscritos, tarea.id_emergencia, tarea.finicio, tarea.ffin, ST_AsText(tarea.geom) AS geom FROM  " +
+        final String query = "SELECT tarea.id, tarea.nombre, tarea.descrip,  " +
+                "tarea.id_emergencia, tarea.finicio, ST_AsText(tarea.geom) AS geom FROM  " +
                 "tarea JOIN region ON ST_Intersects(region.geom,tarea.geom) WHERE region.gid = :idRegion";
         try (Connection conn = sql2o.open()) {
             return conn.createQuery(query)
