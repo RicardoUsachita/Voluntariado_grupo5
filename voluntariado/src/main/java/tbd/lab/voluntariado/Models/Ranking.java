@@ -1,50 +1,106 @@
 package tbd.lab.voluntariado.Models;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 @EntityScan
 public class Ranking {
+    /**
+     * ATRIBUTOS DE Ranking
+     * @param id del Ranking
+     * @param porcentaje del Ranking
+     * @param id_tarea del Ranking
+     * @param id_voluntario del Ranking
+     */
 
-    //Se establece el modelo para ranking
-    //Se genera un constructor y sus repectivos selectores.
-    public int id;
-    public int id_voluntario;
-    public int id_tarea;
-    public int puntaje;
-    public int flg_invitado;
-    public int flg_participa;
+    private long id;
+    private long porcentaje;
+    private long id_tarea;
+    private long id_voluntario;
 
-    public Ranking(int id, int id_voluntario, int id_tarea, int puntaje, int flg_invitado, int flg_participa) {
-        this.id = id;
-        this.id_voluntario = id_voluntario;
-        this.id_tarea = id_tarea;
-        this.puntaje = puntaje;
-        this.flg_invitado = flg_invitado;
-        this.flg_participa = flg_participa;
+    //CONSTRUCTOR Ranking
+    public Ranking(){
     }
-    //Se obtiene el id del ranking
-    public int getId() {
+
+    //CONSTRUCTOR Ranking
+    public Ranking(long id, long porcentaje, long id_tarea, long id_voluntario){
+        this.id = id;
+        this.porcentaje = porcentaje;
+        this.id_tarea = id_tarea;
+        this.id_voluntario = id_voluntario;
+    }
+
+    //GETTERS Ranking
+
+    /**
+     * @return id
+     */
+    public long getId() {
         return id;
     }
-    //Se obtiene el id del voluntario
-    public int getId_voluntario() {
-        return id_voluntario;
+
+    /**
+     * @return porcentaje
+     */
+    public long getPorcentaje() {
+        return porcentaje;
     }
-    //Se obtiene el id de la tarea
-    public int getId_tarea() {
+
+    /**
+     * @return id_tarea
+     */
+    public long getId_tarea() {
         return id_tarea;
     }
-    //Se obtiene el puntaje del voluntario
-    public int getPuntaje() {
-        return puntaje;
+
+    /**
+     * @return id_voluntario
+     */
+    public long getId_voluntario() {
+        return id_voluntario;
     }
-    //Se obtiene el flag de invitado
-    public int getFlg_invitado() {
-        return flg_invitado;
+
+    //SETTERS Ranking
+
+    /**
+     * @param id del Ranking
+     */
+    public void setId(long id) {
+        this.id = id;
     }
-    //Se obtiene el flag de participa
-    public int getFlg_participa() {
-        return flg_participa;
+
+    /**
+     * @param porcentaje del Ranking
+     */
+    public void setPorcentaje(long porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+
+    /**
+     * @param id_tarea del Ranking
+     */
+    public void setId_tarea(long id_tarea) {
+        this.id_tarea = id_tarea;
+    }
+
+    /**
+     * @param id_voluntario del Ranking
+     */
+    public void setId_voluntario(long id_voluntario) {
+        this.id_voluntario = id_voluntario;
+    }
+
+    //TOSTRING Ranking
+
+    /**
+     * @return String con los datos del Ranking
+     */
+    @Override
+    public String toString() {
+        return "Ranking{" +
+                "id=" + id +
+                ", porcentaje=" + porcentaje +
+                ", id_tarea=" + id_tarea +
+                ", id_voluntario=" + id_voluntario +
+                '}';
     }
 
 

@@ -10,204 +10,167 @@ import tbd.lab.voluntariado.Models.Voluntario;
 
 import java.util.List;
 
-@Component
-@Configuration
+
 @Repository
 public class VoluntarioRepositoryImp implements VoluntarioRepository{
     //Implementacion de firmas a traves del uso de sql2o para la conexion con la DB.
     @Autowired
     private Sql2o sql2o;
 
+    /**
+     * @return {@value} int cantidad de voluntarios
+     * @throws Exception si no se puede obtener la cantidad de voluntarios
+     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#countVoluntarios()
+     */
     @Override
-    public Integer generateId(){
-        Integer newId;
-        String queryId = "select max(id) from voluntario";
-        Connection conn = sql2o.open();
-        try(conn){
-            System.out.println("Entro dentro de try...");
-            newId=conn.createQuery(queryId)
-                    .executeScalar(Integer.class);
-            if(newId==null){
-                return 0;
-            }
-            else {
-                return newId;
-            }
-
+    public int countVoluntarios(){
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM voluntario";
+        try (Connection conn = sql2o.open()) {
+            total = conn.createQuery(sql).executeScalar(Integer.class);
+            return total;
         }
-        catch(Exception e){
-            System.out.println("Entro en la excepcion...");
-            return 0;
-        }
-        finally {
-            conn.close();
-        }
-
-
-
-
     }
-    //Se crea el voluntario
-    //se necesitan el nombre y la fecha de nacimiento del voluntario
+
+    /**
+     * @return {@value} int nuevo id
+     * @throws Exception si no se puede obtener el id
+     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#newId()
+     */
     @Override
-    public Voluntario createVoluntario(Voluntario voluntario) {
+    public int newId(){
+        int id = 0;
+        String sql = "SELECT MAX(id) FROM voluntario";
+        try (Connection conn = sql2o.open()) {
+            id = conn.createQuery(sql).executeScalar(Integer.class);
+            return id;
+        }
+    }
 
-        System.out.println(voluntario.getNombre()+"nombres y desc"+voluntario.getNacimiento());
-
-        Integer myId = generateId()+1;
-        System.out.println("myId = "+myId);
-        final String query = "insert into voluntario (id,nombre) values (:myId,:nombre)";
-        System.out.println("Intenta conexion...");
-        Connection conn = sql2o.open();
-        try (conn) {
-            System.out.println("Dentro de Intenta conexion...");
-            conn.createQuery(query)
-                    .addParameter("myId", myId)
-                    .addParameter("nombre", voluntario.getNombre())
-                    .executeUpdate();
+    /**
+     * @return {@value} List<Voluntario> lista de voluntarios
+     * @throws Exception si no se puede obtener la lista de voluntarios
+     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#getAll()
+     */
+    @Override
+    public List<Voluntario> getAll() {
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM voluntario ORDER BY voluntario.id ASC")
+                    .executeAndFetch(Voluntario.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
-        } finally {
-            conn.close();
         }
-        System.out.println("Conexion exitosa!... Dato ingresado en la base de datos...");
-        return voluntario;
-
     }
 
-    //Getter de voluntarioes por el id, se requiere del id a buscar.
+    /**
+     * @param id {@value} int id del voluntario
+     * @return {@value} Voluntario voluntario
+     * @throws Exception si no se puede obtener el voluntario
+     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#showVoluntarioById(int id)
+     */
     @Override
-    public Voluntario getVoluntarioById(Integer id) {
-
-        System.out.println("Intento getvoluntarioById...");
-        final String query = "select * from voluntario where id = :id";
-        final Voluntario voluntario;
-        Connection conn = sql2o.open();
-        try(conn){
-            voluntario = conn.createQuery(query)
+    public List<Voluntario> showVoluntarioById(long id){
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM voluntario WHERE voluntario.id = :id")
                     .addParameter("id", id)
-                    .executeAndFetchFirst(Voluntario.class);
+                    .executeAndFetch(Voluntario.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param nombre {@value} String nombre del voluntario
+     * @param password {@value} String password del voluntario
+     * @return {@value} List<Voluntario> lista de voluntarios
+     * @throws Exception si no se puede obtener la lista de voluntarios
+     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#getVoluntarioLogin(String nombre, String password)
+     */
+    @Override
+    public List<Voluntario> getVoluntarioLogin(String nombre,String password){
+        try(Connection conn = sql2o.open())
+        {
+            return conn.createQuery("SELECT * FROM voluntario WHERE usuario = :usuario2 AND password = :password2")
+                    .addParameter("usuario2",nombre)
+                    .addParameter("password2",password)
+                    .executeAndFetch(Voluntario.class);
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "Nombre de Usuario o Contrasena incorrectos\n");
+            return null;
+        }
+    }
+
+    /**
+     * @param voluntario {@value} Voluntario voluntario
+     * @return {@value} Voluntario voluntario
+     * @throws Exception si no se puede crear el voluntario
+     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#createVoluntario(Voluntario voluntario)
+     */
+    @Override
+    public Voluntario createVoluntario(Voluntario voluntario){
+        Connection conn = sql2o.open();
+        String SQL_INSERT = "INSERT INTO voluntario(correo, usuario, nombre, password, atributos)" +
+                "VALUES(:correo2, :usuario2, :nombre2, :password2, :atributos2)";
+
+        try{
+            conn.createQuery(SQL_INSERT)
+                    .addParameter("correo2",voluntario.getCorreo())
+                    .addParameter("usuario2",voluntario.getUsuario())
+                    .addParameter("nombre2",voluntario.getNombre())
+                    .addParameter("password2",voluntario.getPassword())
+                    .addParameter("atributos2",voluntario.getAtributos())
+                    .executeUpdate();
+
+            voluntario.setId(newId());
             return voluntario;
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo crear la voluntario\n");
             return null;
         }
-        finally {
-            conn.close();
-        }
-
     }
 
-
-    //Getter de todas las voluntarioes (sin compaginado).
+    /**
+     * @param id {@value} int id del voluntario
+     * @return void
+     */
     @Override
-    public List<Voluntario> getAllVoluntarios(){
-        final String query = "select * from voluntario";
-        final List<Voluntario> voluntarioList;
+    public void deleteVoluntarioById(long id){
         Connection conn = sql2o.open();
-        try(conn){
-            voluntarioList = conn.createQuery(query).executeAndFetch(Voluntario.class);
-            return voluntarioList;
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        finally {
-            conn.close();
+        String SQL_DELETE = "DELETE FROM voluntario WHERE voluntario.id = :id";
+
+        try{
+            conn.createQuery(SQL_DELETE).addParameter("id", id).executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo borrar el voluntario\n");
         }
     }
 
-    //Se actualiza la voluntario, se requiere de un objeto voluntario.
+    /**
+     * @param voluntario {@value} Voluntario voluntario
+     * @return void
+     */
     @Override
-    public Voluntario updateVoluntario(Voluntario voluntario){
-        if(voluntario.getNombre().length()!=0 && voluntario.getNacimiento().toLocalDate() != null){
-            final String query = "update voluntario set nombre = :nombre, fnacimiento =:fnacimiento  where id = :id";
-            Connection conn = sql2o.open();
-            try(conn){
-                conn.createQuery(query)
-                        .addParameter("id", voluntario.getId())
-                        .addParameter("nombre", voluntario.getNombre())
-                        .addParameter("fnacimiento", voluntario.getNacimiento())
-                        .executeUpdate();
-                return voluntario;
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-                return null;
-            }
-            finally {
-                conn.close();
-            }
-        }
-        else{
-            System.out.println("Else null createvoluntario...");
-            return null;
-        }
-    }
+    public void updateVoluntario(Voluntario voluntario){
 
-    //Hard delete para una voluntario por id.
-    @Override
-    public void deleteVoluntarioById(Integer id){
-        System.out.println("Intento eliminar...");
-        final String query = "DELETE FROM voluntario WHERE id=:id";
-        Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
-                    .addParameter("id", id)
+        String SQL_UPDATE = "UPDATE voluntario SET correo = :correo2, usuario = :usuario2, nombre = :nombre2, password = :password2, atributos = :atributos2, id = :id2 WHERE id = :id2";
+
+        try(Connection conn = sql2o.open()) {
+            conn.createQuery(SQL_UPDATE)
+                    .addParameter("correo2",voluntario.getCorreo())
+                    .addParameter("usuario2",voluntario.getUsuario())
+                    .addParameter("nombre2",voluntario.getNombre())
+                    .addParameter("password2",voluntario.getPassword())
+                    .addParameter("atributos2",voluntario.getAtributos())
+                    .addParameter("id2",voluntario.getId())
                     .executeUpdate();
-            System.out.println("Eliminado con exito...");
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Excepcion...");
-        }
-        finally {
-            conn.close();
-        }
-    }
-    //Hard delete para todas las voluntarioes.
-    @Override
-    public void deleteVoluntarios(){
-        System.out.println("Intento eliminar...");
-        final String query = "DELETE FROM voluntario";
-        Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
-                    .executeUpdate();
-            System.out.println("Eliminado con exito...");
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Excepcion...");
-        }
-        finally {
-            conn.close();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo actualizar el voluntario\n");
         }
     }
 
-
-
-
-    @Override
-    public void generateViewByIdEmergencia(String inputId) {
-        final String query = "create or replace view tareas_emergencia as select tarea.id_emergencia,tarea.nombre,tarea.id " +
-                "as id_tarea from tarea, emergencia where tarea.id_emergencia ="+inputId+" and tarea.id_emergencia = emergencia.id";
-        Connection conn = sql2o.open();
-
-        try(conn){
-            System.out.println("Intenta conexion dentro de try...");
-            conn.createQuery(query).executeUpdate();
-            System.out.println("Exito con exito...");
-        }
-        catch(Exception e){
-            System.out.println("query fallida con exito!");
-            System.out.println(e.getMessage());
-        }
-        finally {
-            conn.close();
-        }
-    }
 }

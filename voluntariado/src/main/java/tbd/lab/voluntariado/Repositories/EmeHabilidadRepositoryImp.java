@@ -10,156 +10,139 @@ import tbd.lab.voluntariado.Models.EmeHabilidad;
 
 import java.util.List;
 
-@Component
-@Configuration
 @Repository
 public class EmeHabilidadRepositoryImp implements EmeHabilidadRepository{
     @Autowired
     private Sql2o sql2o;
 
+    /**
+     * @return {@value} int cantidad de emergencias_habilidades
+     * @throws Exception si no se puede obtener la cantidad de emergencias_habilidades
+     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#countEmergenciaHabilidades()
+     */
     @Override
-    public Integer generateId(){
-        Integer newId;
-        String queryId = "select max(id) from eme_habilidad";
-        Connection conn = sql2o.open();
-        try(conn){
-            System.out.println("Entro dentro de try...");
-            newId=conn.createQuery(queryId)
-                    .executeScalar(Integer.class);
-            if(newId==null){
-                return 0;
-            }
-            else {
-                return newId;
-            }
-
-        }
-        catch(Exception e){
-            System.out.println("Entro en la excepcion...");
-            return 0;
-        }
-        finally {
-            conn.close();
-        }
-    }
-
-    @Override
-    public EmeHabilidad createEmeHabilidad(EmeHabilidad emeHabilidad) {
-        Integer myId = generateId()+1;
-        System.out.println("myId = "+myId);
-        final String query = "insert into eme_habilidad (id,id_emergencia,id_habilidad) values (:myId,:id_emergencia,:id_habilidad)";
+    public int countEmergenciaHabilidades(){
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM emergencia_habilidad";
         try (Connection conn = sql2o.open()) {
-            conn.createQuery(query)
-                    .addParameter("myId", myId)
-                    .addParameter("id_emergencia", emeHabilidad.getId_emergencia())
-                    .addParameter("id_habilidad", emeHabilidad.getId_habilidad())
-                    .executeUpdate();
-            return emeHabilidad;
+            total = conn.createQuery(sql).executeScalar(Integer.class);
+            return total;
         }
     }
-    @Override
-    public EmeHabilidad getEmeHabilidadById(Integer id) {
 
-        System.out.println("Intento getTarea...");
-        final String query = "select * from eme_habilidad where id = :id";
-        final EmeHabilidad emeHabilidad;
-        Connection conn = sql2o.open();
-        try(conn){
-            emeHabilidad = conn.createQuery(query)
+    /**
+     * @return {@value} int nuevo id
+     * @throws Exception si no se puede obtener el id
+     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#newId()
+     */
+    @Override
+    public int newId(){
+        int id = 0;
+        String sql = "SELECT MAX(id) FROM emergencia_habilidad";
+        try (Connection conn = sql2o.open()) {
+            id = conn.createQuery(sql).executeScalar(Integer.class);
+            return id;
+        }
+    }
+
+    /**
+     * @return {@value} List<Emergencia_Habilidad> lista de emergencias_habilidades
+     * @throws Exception si no se puede obtener la lista de emergencias_habilidades
+     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#getAll()
+     */
+    @Override
+    public List<EmeHabilidad> getAll() {
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM emergencia_habilidad ORDER BY emergencia_habilidad.id ASC")
+                    .executeAndFetch(EmeHabilidad.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param {@value} int id
+     * @return {@value} Emergencia_Habilidad emergencia_habilidad
+     * @throws Exception si no se puede obtener la emergencia_habilidad
+     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#showEmergenciaHabilidadById(long id)
+     */
+    @Override
+    public List<EmeHabilidad> showEmergenciaHabilidadById(long id){
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM emergencia_habilidad WHERE emergencia_habilidad.id = :id")
                     .addParameter("id", id)
-                    .executeAndFetchFirst(EmeHabilidad.class);
-            return emeHabilidad;
-        }
-        catch(Exception e){
+                    .executeAndFetch(EmeHabilidad.class);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
-        finally {
-            conn.close();
-        }
     }
 
+    /**
+     * @param {@value} Emergencia_Habilidad emergencia_habilidad
+     * @return {@value} Emergencia_Habilidad emergencia_habilidad
+     * @throws Exception si no se puede crear la emergencia_habilidad
+     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#createEmergenciaHabilidad(EmeHabilidad emergenciaHabilidad)
+     */
     @Override
-    public List<EmeHabilidad> getAllEmeHabilidad() {
-
-        final String query = "select * from eme_habilidad";
-        final List<EmeHabilidad> emeHabilidadList;
+    public EmeHabilidad createEmergenciaHabilidad(EmeHabilidad emergencia_habilidad) {
         Connection conn = sql2o.open();
-        try(conn){
-            emeHabilidadList = conn.createQuery(query).throwOnMappingFailure(false).executeAndFetch(EmeHabilidad.class);
-            return emeHabilidadList;
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
+        String SQL_INSERT = "INSERT INTO emergencia_habilidad(id, id_emergencia, id_habilidad)" +
+                "VALUES (:id2, :id_emergencia2, :id_habilidad2)";
+
+        try{
+            conn.createQuery(SQL_INSERT)
+                    .addParameter("id2", emergencia_habilidad.getId())
+                    .addParameter("id_emergencia2", emergencia_habilidad.getId_emergencia())
+                    .addParameter("id_habilidad2", emergencia_habilidad.getId_habilidad())
+                    .executeUpdate();
+
+            emergencia_habilidad.setId(newId());
+
+            return emergencia_habilidad;
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo crear la emergenciaHabilidad\n");
             return null;
         }
-        finally {
-            conn.close();
-        }
     }
 
+    /**
+     * @param {@value} Emergencia_Habilidad emergencia_habilidad
+     * @return {@value} Emergencia_Habilidad emergencia_habilidad
+     * @throws Exception si no se puede actualizar la emergencia_habilidad
+     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#updateEmergenciaHabilidad(EmeHabilidad emergenciaHabilidad)
+     */
     @Override
-    public EmeHabilidad updateEmeHabilidad(EmeHabilidad emeHabilidad) {
-        final String query = "update eme_habilidad set id_emergencia=:id_emergencia, id_habilidad=:id_habilidad where id = :id";
+    public void deleteEmergenciaHabilidadById(long id){
         Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
-                    .addParameter("id", emeHabilidad.getId())
-                    .addParameter("id_emergencia", emeHabilidad.getId_emergencia())
-                    .addParameter("id_habilidad", emeHabilidad.getId_habilidad())
-                    .executeUpdate();
-            return emeHabilidad;
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        finally {
-            conn.close();
-        }
+        String SQL_DELETE = "DELETE FROM emergencia_habilidad WHERE emergencia_habilidad.id = :id";
 
+        try{
+            conn.createQuery(SQL_DELETE).addParameter("id", id).executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo borrar la emergenciaHabilidad\n");
+        }
     }
 
 
     @Override
-    public void deleteEmeHabilidadById(Integer id) {
-        System.out.println("Intento eliminar...");
-        final String query = "DELETE FROM eme_habilidad WHERE id=:id";
-        Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
-                    .addParameter("id", id)
-                    .executeUpdate();
-            System.out.println("Eliminado con exito...");
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Excepcion...");
-        }
-        finally {
-            conn.close();
-        }
+    public void updateEmergenciaHabilidad(EmeHabilidad emergencia_habilidad){
+        String SQL_UPDATE = "UPDATE emergencia_habilidad SET id = :id2, id_emergencia = :id_emergencia2, id_habilidad = :id_habilidad2 WHERE id = :id2";
 
+        try(Connection conn = sql2o.open()) {
+            conn.createQuery(SQL_UPDATE)
+                    .addParameter("id2", emergencia_habilidad.getId())
+                    .addParameter("id_emergencia2", emergencia_habilidad.getId_emergencia())
+                    .addParameter("id_habilidad2", emergencia_habilidad.getId_habilidad())
+                    .executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo actualizar la emergenciaHabilidad\n");
+        }
     }
 
-    @Override
-    public void deleteEmeHabilidad() {
-        System.out.println("Intento eliminar...");
-        final String query = "DELETE FROM eme_habilidad";
-        Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
-                    .executeUpdate();
-            System.out.println("Eliminado con exito...");
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Excepcion...");
-        }
-        finally {
-            conn.close();
-        }
-
-    }
 
 }

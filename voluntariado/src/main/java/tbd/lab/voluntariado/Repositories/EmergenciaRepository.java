@@ -4,20 +4,19 @@ import tbd.lab.voluntariado.Models.Emergencia;
 
 import java.util.List;
 
+/**
+ * Interface para EmergenciaRepository
+ */
 public interface EmergenciaRepository {
-    Integer generateIdEmergencia();
 
-    Emergencia createEmergencia(Emergencia emergencia);
+    public int countEmergencias();
+    public int newId();
+    public List<Emergencia> getAll();
+    public List<Emergencia> showEmergenciaById(long id);
+    public Emergencia createEmergencia(Emergencia emergencia);
+    public void deleteEmergenciaById(long id);
+    public void updateEmergencia(Emergencia emergencia);
 
-    Emergencia getEmergenciaById(Integer id);
-
-    List<Emergencia> getAllEmergencia();
-
-    Emergencia updateEmergencia(Emergencia emergencia);
-
-    void deleteEmergenciaById(Integer id);
-
-    void deleteEmergencia();
 
 
 

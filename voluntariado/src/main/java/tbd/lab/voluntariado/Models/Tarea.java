@@ -2,107 +2,170 @@ package tbd.lab.voluntariado.Models;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import java.util.Date;
+import java.sql.Date;
 
 @EntityScan
 public class Tarea {
-    public int id;
-    public String nombre;
-    public String descripcion;
-    public Integer id_emergencia;
-    public Date finicio;
+    //ATRIBUTOS DE TAREA
+    /**
+     * @param id de la tarea
+     * @param id_emergencia de la tarea
+     * @param nombre de la tarea
+     * @param descripcion de la tarea
+     * @param fecha de la tarea
+     * @param requerimientos de la tarea
+     * @param longitude de la tarea
+     * @param latitude de la tarea
+     */
 
-    public Integer id_estado;
-    public Double longitud;
-    public Double latitud;
-    public String geom;
+    private long id;
+    private long id_emergencia;
+    private String nombre;
+    private String descripcion;
+    private java.sql.Date fecha;
+    private String requerimientos;
+    private long longitude;
+    private long latitude;
 
-    public Tarea(int id, String nombre, String descripcion,
-                 Integer id_emergencia, Date finicio,
-                 Integer id_estado, Double longitud, Double latitud, String geom) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.id_emergencia = id_emergencia;
-        this.id_estado = id_estado;
-        this.longitud = longitud;
-        this.latitud = latitud;
-        this.geom = geom;
+    //CONSTRUCTOR TAREA
+    public Tarea(){
     }
 
-    public int getId() {
+    //CONSTRUCTOR TAREA
+    public Tarea(long id, long id_emergencia, String nombre, String descripcion, java.sql.Date fecha, String requerimientos, long longitude, long latitude){
+        this.id = id;
+        this.id_emergencia = id_emergencia;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.requerimientos = requerimientos;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    //GETTERS TAREA
+
+    /**
+     * @return id
+     */
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    /**
+     * @return id_emergencia
+     */
+    public long getId_emergencia() {
+        return id_emergencia;
     }
 
+    /**
+     * @return nombre
+     */
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
+    /**
+     * @return descripcion
+     */
     public String getDescripcion() {
         return descripcion;
     }
 
+    /**
+     * @return fecha
+     */
+    public java.sql.Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @return requerimientos
+     */
+    public String getRequerimientos() {
+        return requerimientos;
+    }
+
+    /**
+     * @return longitude
+     */
+    public long getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * @return latitude
+     */
+    public long getLatitude() {
+        return latitude;
+    }
+
+    //SETTERS TAREA
+
+    /**
+     * @param id de la tarea
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
+     * @param id_emergencia de la tarea
+     */
+    public void setId_emergencia(long id_emergencia) {
+        this.id_emergencia = id_emergencia;
+    }
+
+    /**
+     * @param nombre de la tarea
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @param descripcion de la tarea
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-
-
-    public Integer getId_emergencia() {
-        return id_emergencia;
+    /**
+     * @param fecha de la tarea
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public void setId_emergencia(Integer id_emergencia) {
-        this.id_emergencia = id_emergencia;
+    /**
+     * @param requerimientos de la tarea
+     */
+    public void setRequerimientos(String requerimientos) {
+        this.requerimientos = requerimientos;
     }
 
-    public Date getFinicio() {
-        return finicio;
+    /**
+     * @param longitude de la tarea
+     */
+    public void setLongitude(long longitude) {
+        this.longitude = longitude;
     }
 
-    public void setFinicio(Date finicio) {
-        this.finicio = finicio;
+    /**
+     * @param latitude de la tarea
+     */
+    public void setLatitude(long latitude) {
+        this.latitude = latitude;
     }
 
+    //TOSTRING TAREA
 
-
-    public Integer getId_estado() {
-        return id_estado;
-    }
-
-    public void setId_estado(Integer id_estado) {
-        this.id_estado = id_estado;
-    }
-
-    public Double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(Double longitud) {
-        this.longitud = longitud;
-    }
-
-    public Double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(Double latitud) {
-        this.latitud = latitud;
-    }
-
-    public String getGeom() {
-        return geom;
-    }
-
-    public void setGeom(String geom) {
-        this.geom = geom;
+    /**
+     * @return String con los datos de la tarea
+     */
+    @Override
+    public String toString() {
+        return "Tarea [id=" + id + ", id_emergencia=" + id_emergencia + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fecha=" + fecha + ", requerimientos=" + requerimientos + ", longitude=" + longitude + ", latitude=" + latitude + "]";
     }
 }

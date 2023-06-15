@@ -6,188 +6,253 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import org.sql2o.data.Table;
 import tbd.lab.voluntariado.Models.Ranking;
 import tbd.lab.voluntariado.Services.TareaService;
 import tbd.lab.voluntariado.Services.VoluntarioService;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Component
-@Configuration
+
 @Repository
 public class RankingRepositoryImp implements RankingRepository{
 
         @Autowired
         private Sql2o sql2o;
-        VoluntarioService voluntarioService;
-        TareaService tareaService;
+        /**
+         * @param ranking {@value} Ranking ranking a crear
+         * @return {@value} Ranking ranking creado
+         * @throws Exception si no se puede crear el ranking
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#createRanking(tbd.lab.voluntariado.Models.Ranking)
+         */
         @Override
-        public Integer generateIdRanking(){
-            Integer newId;
-            String queryId = "select max(id) from ranking";
-            Connection conn = sql2o.open();
-            try(conn){
-                System.out.println("Entro dentro de try...");
-                newId=conn.createQuery(queryId)
-                        .executeScalar(Integer.class);
-                if(newId==null){
-                    return 0;
-                }
-                else {
-                    return newId;
-                }
-
-            }
-            catch(Exception e){
-                System.out.println("Entro en la excepcion...");
-                return 0;
-            }
-            finally {
-                conn.close();
-            }
-        }
-        @Override
-        public Ranking createRanking(Ranking ranking) {
-            int id_voluntario = voluntarioService.getVoluntarioById(ranking.getId_voluntario()).getId();
-            int id_tarea = tareaService.getTareaById(ranking.getId_tarea()).getId();
-            if(id_voluntario > 0 && id_tarea > 0){
-                Integer myId = generateIdRanking()+1;
-                System.out.println("myId = "+myId);
-                final String query = "insert into ranking (id,id_voluntario,id_tarea,puntaje,flg_invitado,flg_participa) values (:myId,:id_voluntario,:id_tarea,:puntaje,:flg_invitado,:flg_participa)";
-                try (Connection conn = sql2o.open()) {
-                    conn.createQuery(query)
-                            .addParameter("myId", myId)
-                            .addParameter("id_voluntario", ranking.getId_voluntario())
-                            .addParameter("id_tarea", ranking.getId_tarea())
-                            .addParameter("puntaje", ranking.getPuntaje())
-                            .addParameter("flg_invitado", ranking.getFlg_invitado())
-                            .addParameter("flg_participa", ranking.getFlg_participa())
-                            .executeUpdate();
-                    return ranking;
-                }
-            }
-            else{
-                return null;
-            }
-        }
-
-        @Override
-        public Ranking getRankingById(Integer id) {
-
-            System.out.println("Intento getTarea...");
-            final String query = "select * from ranking where id = :id";
-            final Ranking Ranking;
-            Connection conn = sql2o.open();
-            try(conn){
-                Ranking = conn.createQuery(query)
-                        .addParameter("id", id)
-                        .executeAndFetchFirst(Ranking.class);
-                return Ranking;
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-                return null;
-            }
-            finally {
-                conn.close();
-            }
-
-        }
-
-
-
-        @Override
-        public List<Ranking> getAllRankings() {
-
-            final String query = "select * from ranking";
-            final List<Ranking> rankingList;
-            Connection conn = sql2o.open();
-            try(conn){
-                rankingList = conn.createQuery(query).throwOnMappingFailure(false).executeAndFetch(Ranking.class);
-                return rankingList;
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-                return null;
-            }
-            finally {
-                conn.close();
-            }
-        }
-
-        @Override
-        public Ranking updateRanking(Ranking ranking) {
-            int id_voluntario = voluntarioService.getVoluntarioById(ranking.getId_voluntario()).getId();
-            int id_tarea = tareaService.getTareaById(ranking.getId_tarea()).getId();
-            int puntaje = ranking.getPuntaje();
-            int flg_invitado = ranking.getFlg_invitado();
-            int flg_participa = ranking.getFlg_participa();
-            if(id_voluntario > 0 && id_tarea > 0 && puntaje > 0 && flg_invitado == 0 || flg_invitado == 1 && flg_participa == 0 || flg_participa == 1){
-                final String query = "update Ranking set nombre = :nombre, descrip = :descrip, finicio = :finicio, ffin = :ffin, id_estado = :id_estado where id = :id";
+        public Ranking createRanking(Ranking ranking){
                 Connection conn = sql2o.open();
-                try(conn){
-                    conn.createQuery(query)
-                            .addParameter("id", ranking.getId())
-                            .addParameter("id_voluntaro", ranking.getId_voluntario())
-                            .addParameter("id_tarea", ranking.getId_tarea())
-                            .addParameter("puntaje", ranking.getPuntaje())
-                            .addParameter("flg_invitado", ranking.getFlg_invitado())
-                            .addParameter("flg_participa", ranking.getFlg_participa())
-                            .executeUpdate();
-                    return ranking;
+
+                String SQL_INSERT = "INSERT INTO ranking(porcentaje, id_tarea, id_voluntario)" +
+                        "VALUES (:porcentaje, :id_tarea2, :id_voluntario2)";
+
+                try{
+                        conn.createQuery(SQL_INSERT)
+                                .addParameter("porcentaje", ranking.getPorcentaje())
+                                .addParameter("id_tarea2", ranking.getId_tarea())
+                                .addParameter("id_voluntario2", ranking.getId_voluntario())
+                                .executeUpdate();
+
+                        ranking.setId(newID());
+
+                        return ranking;
+
+                } catch(Exception e) {
+                        System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo crear el ranking\n");
+                        return null;
                 }
-                catch(Exception e){
-                    System.out.println(e.getMessage());
-                    return null;
-                }
-                finally {
-                    conn.close();
-                }
-            }
-            else{
-                System.out.println("Else null updateRanking...");
-                return null;
-            }
         }
+
+        /**
+         * @return {@value} int cantidad de rankings
+         * @throws Exception si no se puede obtener la cantidad de rankings
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#countAllRanks()
+         */
+        @Override
+        public int countAllRanks() {
+                int total = 0;
+                String sql = "SELECT COUNT(*) FROM ranking";
+                try (Connection conn = sql2o.open()) {
+                        total = conn.createQuery(sql).executeScalar(Integer.class);
+                        return total;
+                }
+        }
+
+        /**
+         * @return {@value} int nuevo id
+         * @throws Exception si no se puede obtener el id
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#newID()
+         */
+        @Override
+        public int newID() {
+                int id = 0;
+                String sql = "SELECT MAX(id) FROM ranking";
+                try (Connection conn = sql2o.open()) {
+                        id = conn.createQuery(sql).executeScalar(Integer.class);
+                        return id;
+                }
+        }
+
+        /**
+         * @return {@value} List<Ranking> todos los rankings
+         * @throws Exception si no se puede obtener los rankings
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#getAll()
+         * @see tbd.lab.voluntariado.Models.Ranking
+         */
+        @Override
+        public List<Ranking> getAll() {
+                try(Connection conn = sql2o.open()){
+                        return conn.createQuery("SELECT * FROM ranking ORDER BY Ranking.id ASC")
+                                .executeAndFetch(Ranking.class);
+                } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        return null;
+                }
+        }
+
+        /**
+         * @param id {@value} long id del ranking a obtener
+         * @return {@value} List<Ranking> ranking obtenido
+         * @throws Exception si no se puede obtener el ranking
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#showRankingById(long)
+         */
+        @Override
+        public List<Ranking> showRankingById(long id) {
+
+                try(Connection conn = sql2o.open()){
+                        return conn.createQuery("SELECT * FROM ranking WHERE ranking.id = :id")
+                                .addParameter("id", id)
+                                .executeAndFetch(Ranking.class);
+                } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        return null;
+                }
+        }
+
+        /**
+         * @param ranking {@value} Ranking ranking a eliminar
+         * @throws Exception si no se puede eliminar el ranking
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#deleteRankingById(tbd.lab.voluntariado.Models.Ranking)
+         */
+        @Override
+        public void deleteRankingById(long id) {
+                Connection conn = sql2o.open();
+                String SQL_DELETE = "DELETE FROM ranking WHERE ranking.id = :id";
+
+                try{
+                        conn.createQuery(SQL_DELETE).addParameter("id", id).executeUpdate();
+
+                } catch(Exception e) {
+                        System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo borrar el Ranking\n");
+                }
+        }
+
+        /**
+         * @param ranking {@value} Ranking ranking a actualizar
+         * @return {@value} Ranking ranking actualizado
+         * @throws Exception si no se puede actualizar el ranking
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#updateRanking(tbd.lab.voluntariado.Models.Ranking)
+         */
+        @Override
+        public void updateRanking(Ranking ranking) {
+                String SQL_UPDATE = "UPDATE ranking SET porcentaje = :porcentaje2, id_voluntario = :id_voluntario2, id_tarea = :id_tarea2, id = :id2 WHERE id = :id2";
+
+                try(Connection conn = sql2o.open()) {
+
+                        conn.createQuery(SQL_UPDATE)
+                                .addParameter("porcentaje2", ranking.getPorcentaje())
+                                .addParameter("id_voluntario2", ranking.getId_voluntario())
+                                .addParameter("id_tarea2", ranking.getId_tarea())
+                                .addParameter("id2", ranking.getId())
+                                .executeUpdate();
+
+                } catch(Exception e) {
+                        System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo actualizar el Ranking\n");
+                }
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        //COMPLEMENTARIOS
+        /*
+
+
+         * @param id {@value} long id de la tarea a obtener
+         * @return {@value} List<Ranking> rankings de la tarea
+         * @throws Exception si no se puede obtener los rankings
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#showRankingByTaskId(long)
 
         @Override
-        public void deleteRankingById(Integer id) {
+        public List<Ranking_Voluntario> getRankingByIdTarea(long id){
+                try(Connection conn = sql2o.open()){
+                        return conn.createQuery("SELECT t1.id_voluntario, t1.porcentaje, t2.nombre FROM ranking t1, voluntario t2 WHERE t1.id_tarea = :id AND t1.id_voluntario = t2.id AND t1.porcentaje > 0 ORDER BY t1.porcentaje DESC;")
+                                .addParameter("id", id)
+                                .executeAndFetch(Ranking_Voluntario.class);
+                } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        return null;
+                }
+        }
 
-            System.out.println("Intento eliminar...");
-            final String query = "DELETE FROM ranking WHERE id=:id";
-            Connection conn = sql2o.open();
-            try(conn){
-                conn.createQuery(query)
-                        .addParameter("id", id)
-                        .executeUpdate();
-                System.out.println("Eliminado con exito...");
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-                System.out.println("Excepcion...");
-            }
-            finally {
-                conn.close();
-            }
+
+
+         * @param id {@value} long id de la tarea para crear ranking
+         * @return {@value} List<Ranking> rankings del voluntario
+         * @throws Exception si no se puede obtener los rankings
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#showRankingByVoluntarioId(long)
+         /*
+        @Override
+        public List<Ranking> createRankingByIdTarea(long id){
+                //Se asume que esta funcion se llamaria para crear un ranking para una tarea dada
+                //De esta manera, surge por cada nueva tarea y esta haria este ranking con los voluntarios que estan en la base de datos
+                int cantidad = 0;
+                String sql_existe = "SELECT COUNT(*) FROM ranking WHERE id_tarea = :id";
+                String sql = "SELECT ROUND(COUNT(t2.id_voluntario)/(SELECT COUNT(*)*1.0 FROM tarea_habilidad WHERE id_tarea = :id)*100), t1.id_tarea,t2.id_voluntario  FROM tarea_habilidad t1, voluntario_habilidad t2 WHERE t1.id_tarea = :id AND t1.id_habilidad = t2.id_habilidad GROUP BY t2.id_voluntario, t1.id_tarea";
+                List<Ranking> rankings = new ArrayList<>();
+                try (Connection conn = sql2o.open()) {
+                        cantidad = conn.createQuery(sql_existe).addParameter("id", id).executeScalar(Integer.class);
+                        if(cantidad == 0){
+                                Table tabla = conn.createQuery(sql)
+                                        .addParameter("id", id)
+                                        .executeAndFetchTable();
+                                tabla.rows().forEach(action -> {
+                                        Ranking ranking = new Ranking();
+                                        ranking.setPorcentaje(action.getInteger(0));
+                                        ranking.setId_tarea(action.getLong(1));
+                                        ranking.setId_voluntario(action.getLong(2));
+                                        ranking.setId(newID());
+                                        createRanking(ranking);
+                                        rankings.add(ranking);
+                                });
+                                return rankings;
+                        }
+                        return null;
+                } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        return null;
+                }
 
         }
+
+        */
+        /*
+         * @param id {@value} long id del voluntario para crear ranking para todas las tareas
+         * @return {@value} List<Ranking> rankings del voluntario
+         * @throws Exception si no se puede obtener los rankings
+         * @see tbd.lab.voluntariado.Repositories.RankingRepository#showRankingByVoluntarioId(long)
 
         @Override
-        public void deleteRanking() {
-            System.out.println("Intento eliminar...");
-            final String query = "DELETE FROM ranking";
-            Connection conn = sql2o.open();
-            try(conn){
-                conn.createQuery(query)
-                        .executeUpdate();
-                System.out.println("Eliminado con exito...");
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-                System.out.println("Excepcion...");
-            }
-            finally {
-                conn.close();
-            }
+        public List<Ranking> createRankingByIdVoluntario(long id){
+                //Se crea esta funcion para crear un ranking para todas las tareas de un voluntario
+                //De esta manera, surge por cada nuevo voluntario y esta haria este ranking con las tareas que estan en la base de datos
+                String sql = "SELECT vh.id_tarea, ROUND((vh.porcentaje/th.porcentaje)*100)  FROM (SELECT id_tarea, COUNT(t1.id_habilidad)*1.0 AS porcentaje FROM voluntario_habilidad t1, tarea_habilidad t2 WHERE t1.id_voluntario = :id AND t1.id_habilidad = t2.id_habilidad GROUP BY id_tarea) vh, (SELECT id_tarea, COUNT(id_habilidad)*1.0 AS porcentaje FROM tarea_habilidad GROUP BY id_tarea) th WHERE vh.id_tarea = th.id_tarea";
+                List<Ranking> rankings = new ArrayList<>();
+                try (Connection conn = sql2o.open()) {
+                        Table tabla = conn.createQuery(sql)
+                                .addParameter("id", id)
+                                .executeAndFetchTable();
+                        tabla.rows().forEach(action -> {
+                                Ranking ranking = new Ranking();
+                                ranking.setPorcentaje(action.getInteger(1));
+                                ranking.setId_tarea(action.getLong(0));
+                                ranking.setId_voluntario(id);
+                                ranking.setId(newID());
+                                createRanking(ranking);
+                                rankings.add(ranking);
+                        });
+                        return rankings;
+                } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        return null;
+                }
         }
+        */
+
 }

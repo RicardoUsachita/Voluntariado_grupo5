@@ -2,103 +2,179 @@ package tbd.lab.voluntariado.Models;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import java.util.Date;
+import java.sql.Date;
 
 @EntityScan
 public class Emergencia {
-    public Long id;
-    public String nombre;
-    public String descripcion;
-    public Date finicio;
-    public Boolean activo;
-    public Integer id_institucion;
-    public Double longitud;
-    public Double latitud;
-    public String geom;
+    /**
+     * ATRIBUTOS DE Emergencia
+     * @param id de la emergencia
+     * @param nombre de la emergencia
+     * @param descripcion de la emergencia
+     * @param fecha de la emergencia
+     * @param reqs_grupales de la emergencia
+     * @param reqs_individuales de la emergencia
+     * @param longitude de la emergencia
+     * @param latitude de la emergencia
 
-    public Emergencia(Long id, String nombre, String descrip, Date finicio,
-                      Boolean activo, Integer id_institucion,
-                      Double longitud, Double latitud, String geom) {
+     */
+    private long id;
+    private String nombre;
+    private String descripcion;
+    private java.sql.Date fecha;
+    private String reqs_grupales;
+    private String reqs_individuales;
+    private long longitude;
+    private long latitude;
+
+    //CONSTRUCTOR Emergencia
+    public Emergencia(){
+    }
+    //CONSTRUCTOR Emergencia
+    public Emergencia(long id, String nombre, String descripcion, java.sql.Date fecha, String reqs_grupales, String reqs_individuales, long longitude, long latitude){
         this.id = id;
         this.nombre = nombre;
-        this.descripcion = descrip;
-        this.finicio = finicio;
-        this.activo = activo;
-        this.id_institucion = id_institucion;
-        this.longitud = longitud;
-        this.latitud = latitud;
-        this.geom = geom;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.reqs_grupales = reqs_grupales;
+        this.reqs_individuales = reqs_individuales;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
-    public Long getId() {
+    //GETTERS Emergencia
+
+    /**
+     * @return id
+     */
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    /**
+     * @return nombre
+     */
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
+    /**
+     * @return descripcion
+     */
     public String getDescripcion() {
         return descripcion;
     }
 
+    /**
+     * @return fecha
+     */
+    public java.sql.Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @return reqs_grupales
+     */
+    public String getReqs_grupales() {
+        return reqs_grupales;
+    }
+
+    /**
+     * @return reqs_individuales
+     */
+    public String getReqs_individuales() {
+        return reqs_individuales;
+    }
+
+    /**
+     * @return longitude
+     */
+    public long getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * @return latitude
+     */
+    public long getLatitude() {
+        return latitude;
+    }
+
+    //SETTERS Emergencia
+
+    /**
+     * @param id id a setear
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
+     * @param nombre nombre a setear
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @param descripcion descripcion a setear
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public Date getFinicio() {
-        return finicio;
+    /**
+     * @param fecha fecha a setear
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public void setFinicio(Date finicio) {
-        this.finicio = finicio;
+    /**
+     * @param reqs_grupales reqs_grupales a setear
+     */
+    public void setReqs_grupales(String reqs_grupales) {
+        this.reqs_grupales = reqs_grupales;
     }
 
-    public Boolean getActivo() {
-        return activo;
+    /**
+     * @param reqs_individuales reqs_individuales a setear
+     */
+    public void setReqs_individuales(String reqs_individuales) {
+        this.reqs_individuales = reqs_individuales;
     }
 
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
+    /**
+     * @param longitude longitude a setear
+     */
+    public void setLongitude(long longitude) {
+        this.longitude = longitude;
     }
 
-    public Integer getId_institucion() {
-        return id_institucion;
+    /**
+     * @param latitude latitude a setear
+     */
+    public void setLatitude(long latitude) {
+        this.latitude = latitude;
     }
 
-    public void setId_institucion(Integer id_institucion) {
-        this.id_institucion = id_institucion;
+    //TOSTRING Emergencia
+
+    /**
+     * @return toString de la emergencia
+     */
+    @Override
+    public String toString() {
+        return "Emergencia{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", fecha=" + fecha +
+                ", reqs_grupales='" + reqs_grupales + '\'' +
+                ", reqs_individuales='" + reqs_individuales + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}';
     }
 
-    public Double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(Double longitud) {
-        this.longitud = longitud;
-    }
-
-    public Double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(Double latitud) {
-        this.latitud = latitud;
-    }
-
-    public String getGeom() {
-        return geom;
-    }
-
-    public void setGeom(String geom) {
-        this.geom = geom;
-    }
 }
