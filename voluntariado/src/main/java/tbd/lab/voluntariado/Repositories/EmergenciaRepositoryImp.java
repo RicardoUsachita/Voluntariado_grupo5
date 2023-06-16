@@ -10,183 +10,154 @@ import tbd.lab.voluntariado.Models.Emergencia;
 
 import java.util.List;
 
-@Component
-@Configuration
 @Repository
 public class EmergenciaRepositoryImp implements EmergenciaRepository {
     //Implementacion de firmas a traves del uso de sql2o para la conexion con la DB.
     @Autowired
     private Sql2o sql2o;
 
+    /**
+     * @return {@value} int cantidad de emergencias
+     * @throws Exception si no se puede obtener la cantidad de emergencias
+     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#countEmergencias()
+     */
     @Override
-    public Integer generateIdEmergencia(){
-        Integer newId;
-        String queryId = "select max(id) from emergencia";
-        Connection conn = sql2o.open();
-        try(conn){
-            System.out.println("Entro dentro de try...");
-            newId=conn.createQuery(queryId)
-                    .executeScalar(Integer.class);
-            if(newId==null){
-                return 0;
-            }
-            else {
-                return newId;
-            }
-
-        }
-        catch(Exception e){
-            System.out.println("Entro en la excepcion...");
-            return 0;
-        }
-        finally {
-            conn.close();
+    public int countEmergencias(){
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM emergencia";
+        try (Connection conn = sql2o.open()) {
+            total = conn.createQuery(sql).executeScalar(Integer.class);
+            return total;
         }
     }
 
-
+    /**
+     * @return {@value} int nuevo id
+     * @throws Exception si no se puede obtener el id
+     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#newId()
+     */
     @Override
-    public Emergencia createEmergencia(Emergencia emergencia) {
-        if(emergencia.getNombre().length()!=0 && emergencia.getDescripcion().length()!=0){
-            Integer myId = generateIdEmergencia()+1;
-            System.out.println("myId = "+myId);
-            final String query = "insert into emergencia (id,nombre,descrip,finicio,ffin,id_estado,longitud,latitud,geom) values (:myId,:nombre,:descrip,:finicio,:ffin,:id_estado,:longitud,:latitud,ST_MakePoint(:longitud,:latitud))";
-            try (Connection conn = sql2o.open()) {
-                conn.createQuery(query)
-                        .addParameter("myId", myId)
-                        .addParameter("nombre", emergencia.getNombre())
-                        .addParameter("descrip", emergencia.getDescripcion())
-                        .addParameter("finicio", emergencia.getFinicio())
-                        .addParameter("activo", emergencia.getActivo())
-                        .addParameter("id_estado", emergencia.getId_institucion())
-                        .addParameter("latitud", emergencia.getLatitud())
-                        .addParameter("longitud", emergencia.getLongitud())
-                        //.addParameter("geom", emergencia.getGeom())
-                        .executeUpdate();
-                return emergencia;
-            }
-        }
-        else{
-            return null;
+    public int newId(){
+        int id = 0;
+        String sql = "SELECT MAX(id) FROM emergencia";
+        try (Connection conn = sql2o.open()) {
+            id = conn.createQuery(sql).executeScalar(Integer.class);
+            return id;
         }
     }
 
+    /**
+     * @return {@value} List<Emergencia> lista de emergencias
+     * @throws Exception si no se puede obtener la lista de emergencias
+     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#getAll()
+     */
     @Override
-    public Emergencia getEmergenciaById(Integer id) {
-
-        final String query = "select * from emergencia where id = :id";
-        final Emergencia emergencia;
-        Connection conn = sql2o.open();
-        try(conn){
-            emergencia = conn.createQuery(query)
-                    .addParameter("id", id)
-                    .executeAndFetchFirst(Emergencia.class);
-            return emergencia;
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        finally {
-            conn.close();
-        }
-
-    }
-    @Override
-    public List<Emergencia> getAllEmergencia() {
-
-        final String query = "select * from emergencia";
-        final List<Emergencia> emergenciaList;
-        Connection conn = sql2o.open();
-        try(conn){
-            emergenciaList = conn.createQuery(query)
-                    .throwOnMappingFailure(false)
+    public List<Emergencia> getAll() {
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM emergencia ORDER BY Emergencia.id ASC")
                     .executeAndFetch(Emergencia.class);
-            return emergenciaList;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
-        finally {
-            conn.close();
-        }
     }
 
+    /**
+     * @param id {@value} long id de emergencia
+     * @return {@value} List<Emergencia> id lista de emergencias
+     * @throws Exception si no se puede obtener la lista de emergencias
+     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#showEmergenciaById(long id)
+     */
     @Override
-    public Emergencia updateEmergencia(Emergencia emergencia) {
-
-        if(emergencia.getNombre().length()!=0 && emergencia.getDescripcion().length()!=0){
-            final String query = "update emergencia set nombre = :nombre, descrip = :descrip, finicio = :finicio, ffin = :ffin, id_estado = :id_estado, longitud = :longitud, latitud = :latitud, geom := ST_MakePoint(:longitud,:latitud)  where id = :id";
-            Connection conn = sql2o.open();
-            try(conn){
-                conn.createQuery(query)
-                        .addParameter("id", emergencia.getId())
-                        .addParameter("nombre", emergencia.getNombre())
-                        .addParameter("descrip", emergencia.getDescripcion())
-                        .addParameter("finicio", emergencia.getFinicio())
-                        .addParameter("activo", emergencia.getActivo())
-                        .addParameter("id_estado", emergencia.getId_institucion())
-                        .addParameter("latitud", emergencia.getLatitud())
-                        .addParameter("longitud", emergencia.getLongitud())
-                        .addParameter("geom", emergencia.getGeom())
-                        .executeUpdate();
-                return emergencia;
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-                return null;
-            }
-            finally {
-                conn.close();
-            }
-        }
-        else{
-            System.out.println("Else null updateEmergencia...");
-            return null;
-        }
-    }
-
-    @Override
-    public void deleteEmergenciaById(Integer id) {
-
-        System.out.println("Intento eliminar...");
-        final String query = "DELETE FROM emergencia WHERE id=:id";
-        Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
+    public List<Emergencia> showEmergenciaById(long id){
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM emergencia WHERE emergencia.id = :id")
                     .addParameter("id", id)
-                    .executeUpdate();
-            System.out.println("Eliminado con exito...");
-        }
-        catch(Exception e){
+                    .executeAndFetch(Emergencia.class);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Excepcion...");
+            return null;
         }
-        finally {
-            conn.close();
-        }
-
     }
 
+    /**
+     * @param emergencia {@value} Emergencia emergencia
+     * @return {@value} Emergencia emergencia
+     * @throws Exception si no se puede crear la emergencia
+     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#createEmergencia(Emergencia emergencia)
+     */
     @Override
-    public void deleteEmergencia() {
-        System.out.println("Intento eliminar...");
-        final String query = "DELETE FROM emergencia";
+    public Emergencia createEmergencia(Emergencia emergencia){
         Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
+        String SQL_INSERT = "INSERT INTO emergencia(nombre, descripcion, fecha,reqs_grupales, reqs_individuales,longitude,latitude)" +
+                "VALUES(:nombre2, :descripcion2, :fecha2, :reqs_grupales2, :reqs_individuales2, :longitude2, :latitude2)";
+        try{
+            conn.createQuery(SQL_INSERT)
+                    .addParameter("nombre2", emergencia.getNombre())
+                    .addParameter("descripcion2", emergencia.getDescripcion())
+                    .addParameter("fecha2", emergencia.getFecha())
+                    .addParameter("reqs_grupales2", emergencia.getReqs_grupales())
+                    .addParameter("reqs_individuales2", emergencia.getReqs_individuales())
+                    .addParameter("longitude2", emergencia.getLongitude())
+                    .addParameter("latitude2", emergencia.getLatitude())
                     .executeUpdate();
-            System.out.println("Eliminado con exito...");
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Excepcion...");
-        }
-        finally {
-            conn.close();
+            emergencia.setId(newId());
+            return emergencia;
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo crear la emergencia\n");
+            return null;
         }
     }
+
+
+    /**
+     * @param id {@value} long id de emergencia
+     * @return void
+     * @throws Exception si no se puede eliminar la emergencia
+     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#deleteEmergencia(long id)
+     */
+    @Override
+    public void deleteEmergenciaById(long id){
+        Connection conn = sql2o.open();
+        String SQL_DELETE = "DELETE FROM emergencia WHERE emergencia.id = :id";
+
+        try{
+            conn.createQuery(SQL_DELETE).addParameter("id", id).executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo borrar la emergencia\n");
+        }
+    }
+
+    /**
+     * @param emergencia {@value} Emergencia emergencia
+     * @return {@value} Emergencia emergencia
+     * @throws Exception si no se puede actualizar la emergencia
+     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#updateEmergencia(Emergencia emergencia)
+     */
+    @Override
+    public void updateEmergencia(Emergencia emergencia){
+
+        String SQL_UPDATE = "UPDATE emergencia SET nombre = :nombre2, descripcion = :descripcion2, fecha = :fecha2, reqs_grupales = :reqs_grupales2, reqs_individuales = :reqs_individuales2, longitude = :longitude2, latitude = :latitude2, id = :id2 WHERE id = :id2";
+        try(Connection conn = sql2o.open()) {
+
+            conn.createQuery(SQL_UPDATE)
+                    .addParameter("nombre2", emergencia.getNombre())
+                    .addParameter("descripcion2", emergencia.getDescripcion())
+                    .addParameter("fecha2", emergencia.getFecha())
+                    .addParameter("reqs_grupales2", emergencia.getReqs_grupales())
+                    .addParameter("reqs_individuales2", emergencia.getReqs_individuales())
+                    .addParameter("longitude2", emergencia.getLongitude())
+                    .addParameter("latitude2", emergencia.getLatitude())
+                    .addParameter("id2", emergencia.getId())
+                    .executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo actualizar la emergencia\n");
+        }
+    }
+
+
 
 
 }

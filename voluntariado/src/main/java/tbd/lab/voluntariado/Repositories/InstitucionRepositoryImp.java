@@ -10,187 +10,151 @@ import tbd.lab.voluntariado.Models.Institucion;
 
 import java.util.List;
 
-@Component
-@Configuration
+
 @Repository
 public class InstitucionRepositoryImp implements InstitucionRepository{
 
     //Implementacion de firmas a traves del uso de sql2o para la conexion con la DB.
     @Autowired
     private Sql2o sql2o;
-
+    /**
+     * @return {@value} int cantidad de instituciones
+     * @throws Exception si no se puede obtener la cantidad de instituciones
+     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#countInstituciones()
+     */
     @Override
-    public Integer generateId(){
-        Integer newId;
-        String queryId = "select max(id) from institucion";
-        Connection conn = sql2o.open();
-        try(conn){
-            System.out.println("Entro dentro de try...");
-            newId=conn.createQuery(queryId)
-                    .executeScalar(Integer.class);
-            if(newId==null){
-                return 0;
-            }
-            else {
-                return newId;
-            }
-
-        }
-        catch(Exception e){
-            System.out.println("Entro en la excepcion...");
-            return 0;
-        }
-        finally {
-            conn.close();
-        }
-    }
-    //Se crea la institucion
-    //se necesitan el nombre y la descripcion de la institucion
-    //El id no ya que la generacion es autoincremental.
-    @Override
-    public Institucion createInstitucion(Institucion institucion) {
-        if(institucion.getNombre().length()!=0 && institucion.getDescripcion().length()!=0){
-
-            System.out.println(institucion.getNombre()+"nombres y desc"+institucion.getDescripcion());
-
-
-            Integer myId = generateId()+1;
-            System.out.println("myId = "+myId);
-            final String query = "insert into institucion (id,nombre, descrip) values (:myId,:nombre,:descrip)";
-            System.out.println("Intenta conexion...");
-            Connection conn = sql2o.open();
-            try (conn) {
-                System.out.println("Dentro de Intenta conexion...");
-                conn.createQuery(query)
-                        .addParameter("myId", myId)
-                        .addParameter("nombre", institucion.getNombre())
-                        .addParameter("descrip", institucion.getDescripcion())
-                        .executeUpdate();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return null;
-            } finally {
-                conn.close();
-            }
-            System.out.println("Conexion exitosa!... Dato ingresado en la base de datos...");
-            return institucion;
-        }
-        else{
-            System.out.println("Else null createInstitucion...");
-            return null;
+    public int countInstituciones(){
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM institucion";
+        try (Connection conn = sql2o.open()) {
+            total = conn.createQuery(sql).executeScalar(Integer.class);
+            return total;
         }
     }
 
-    //Getter de instituciones por el id, se requiere del id a buscar.
+    /**
+     * @return {@value} int nuevo id
+     * @throws Exception si no se puede obtener el id
+     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#newId()
+     */
     @Override
-    public Institucion getInstitucionById(Integer id) {
-
-        System.out.println("Intento getInstitucionById...");
-        final String query = "select * from institucion where id = :id";
-        final Institucion institucion;
-        Connection conn = sql2o.open();
-        try(conn){
-            institucion = conn.createQuery(query)
-                    .addParameter("id", id)
-                    .executeAndFetchFirst(Institucion.class);
-            return institucion;
+    public int newId(){
+        int id = 0;
+        String sql = "SELECT MAX(id) FROM institucion";
+        try (Connection conn = sql2o.open()) {
+            id = conn.createQuery(sql).executeScalar(Integer.class);
+            return id;
         }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        finally {
-            conn.close();
-        }
-
     }
 
-
-    //Getter de todas las instituciones (sin compaginado).
+    /**
+     * @return {@value} List<Institucion> lista de instituciones
+     * @throws Exception si no se puede obtener la lista de instituciones
+     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#getAll()
+     */
     @Override
-    public List<Institucion> getAllInstituciones(){
-        final String query = "select * from institucion";
-        final List<Institucion> institucionList;
-        Connection conn = sql2o.open();
-        try(conn){
-            institucionList = conn.createQuery(query)
+    public List<Institucion> getAll() {
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM institucion ORDER BY institucion.id ASC")
                     .executeAndFetch(Institucion.class);
-            return institucionList;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
-        finally {
-            conn.close();
-        }
     }
 
-    //Se actualiza la institucion, se requiere de un objeto institucion.
+    /**
+     * @param id {@value} int id de la institucion
+     * @return {@value} Institucion institucion
+     * @throws Exception si no se puede obtener la institucion
+     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#getById(int)
+     */
     @Override
-    public Institucion updateInstitucion(Institucion institucion){
-        if(institucion.getNombre().length()!=0 && institucion.getDescripcion().length()!=0){
-            final String query = "update institucion set nombre = :nombre, descrip =:descrip  where id = :id";
-            Connection conn = sql2o.open();
-            try(conn){
-                conn.createQuery(query)
-                        .addParameter("id", institucion.getId())
-                        .addParameter("nombre", institucion.getNombre())
-                        .addParameter("descrip", institucion.getDescripcion())
-                        .executeUpdate();
-                return institucion;
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-                return null;
-            }
-            finally {
-                conn.close();
-            }
-        }
-        else{
-            System.out.println("Else null createInstitucion...");
-            return null;
-        }
-    }
-
-    //Hard delete para una institucion por id.
-    @Override
-    public void deleteInstitucionById(Integer id){
-        System.out.println("Intento eliminar...");
-        final String query = "DELETE FROM institucion WHERE id=:id";
-        Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
+    public List<Institucion> showInstitucionById(long id){
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM institucion WHERE institucion.id = :id")
                     .addParameter("id", id)
-                    .executeUpdate();
-            System.out.println("Eliminado con exito...");
-        }
-        catch(Exception e){
+                    .executeAndFetch(Institucion.class);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Excepcion...");
-        }
-        finally {
-            conn.close();
+            return null;
         }
     }
-    //Hard delete para todas las instituciones.
+
+    /**
+     * @param nombre {@value} String nombre de la institucion
+     * @return {@value} List<Institucion> lista de instituciones
+     * @throws Exception si no se puede obtener la lista de instituciones
+     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#getByNombre(String)
+     */
     @Override
-    public void deleteInstituciones(){
-        System.out.println("Intento eliminar...");
-        final String query = "DELETE FROM institucion";
+    public Institucion createInstitucion(Institucion institucion){
         Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
+        String SQL_INSERT = "INSERT INTO institucion ( nombre, usuario, password, correo, numero) VALUES ( :nombre2, :usuario2, :password2, :correo2, :numero2)";
+
+        try{
+
+            conn.createQuery(SQL_INSERT)
+                    .addParameter("nombre2", institucion.getNombre())
+                    .addParameter("usuario2",institucion.getUsuario())
+                    .addParameter("password2",institucion.getPassword())
+                    .addParameter("correo2", institucion.getCorreo())
+                    .addParameter("numero2", institucion.getNumero())
                     .executeUpdate();
-            System.out.println("Eliminado con exito...");
+
+            institucion.setId(newId());
+            return institucion;
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo crear la institucion\n");
+            return null;
         }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Excepcion...");
+    }
+
+    /**
+     * @param institucion {@value} Institucion institucion
+     * @return {@value} Institucion institucion
+     * @throws Exception si no se puede actualizar la institucion
+     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#updateInstitucion(Institucion)
+     */
+    @Override
+    public void deleteInstitucionById(long id){
+        Connection conn = sql2o.open();
+        String SQL_DELETE = "DELETE FROM institucion WHERE institucion.id = :id";
+
+        try{
+            conn.createQuery(SQL_DELETE).addParameter("id", id).executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo borrar la institucion\n");
         }
-        finally {
-            conn.close();
+    }
+
+    /**
+     * @param institucion {@value} Institucion institucion
+     * @return {@value} Institucion institucion
+     * @throws Exception si no se puede actualizar la institucion
+     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#updateInstitucion(Institucion)
+     */
+    @Override
+    public void updateInstitucion(Institucion institucion){
+
+        String SQL_UPDATE = "UPDATE institucion SET nombre = :nombre2, usuario = :usuario2, password = :password2, correo = :correo2, numero = :numero2 WHERE id = :id2";
+
+
+        try(Connection conn = sql2o.open()) {
+
+            conn.createQuery(SQL_UPDATE)
+                    .addParameter("id2", institucion.getId())
+                    .addParameter("nombre2", institucion.getNombre())
+                    .addParameter("usuario2", institucion.getUsuario())
+                    .addParameter("password2", institucion.getPassword())
+                    .addParameter("correo2", institucion.getCorreo())
+                    .addParameter("numero2", institucion.getNumero())
+                    .executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo actualizar la institucion\n");
         }
     }
 

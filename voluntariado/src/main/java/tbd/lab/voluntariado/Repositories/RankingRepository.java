@@ -5,17 +5,19 @@ import tbd.lab.voluntariado.Models.Ranking;
 import java.util.List;
 
 public interface RankingRepository {
-    Integer generateIdRanking();
+    public Ranking createRanking(Ranking ranking);
+    public int countAllRanks();
+    public int newID();
+    public List<Ranking> getAll();
+    public List<Ranking> showRankingById(long id);
+    public void deleteRankingById(long id);
+    public void updateRanking(Ranking ranking);
 
-    Ranking createRanking(Ranking ranking);
+    /*
+    public List<Ranking_Voluntario> getRankingByIdTarea(long id);
+    */
 
-    Ranking getRankingById(Integer id);
+    public List<Ranking> createRankingByIdTarea(long id);
+    public List<Ranking> createRankingByIdVoluntario(long id);
 
-    List<Ranking> getAllRankings();
-
-    Ranking updateRanking(Ranking ranking);
-
-    void deleteRankingById(Integer id);
-
-    void deleteRanking();
 }

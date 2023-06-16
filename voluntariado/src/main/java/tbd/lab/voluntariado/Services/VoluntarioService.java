@@ -1,54 +1,57 @@
 package tbd.lab.voluntariado.Services;
 
-import tbd.lab.voluntariado.Repositories.VoluntarioRepository;
 import org.springframework.web.bind.annotation.*;
 import tbd.lab.voluntariado.Models.Voluntario;
+import tbd.lab.voluntariado.Repositories.VoluntarioRepository;
+
 
 import java.util.List;
-@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/")
 public class VoluntarioService {
-    //Se hace uso de REST para la implementacion de las direciones para obtener los servicios.
-    private final tbd.lab.voluntariado.Repositories.VoluntarioRepository VoluntarioRepository;
-    VoluntarioService(VoluntarioRepository VoluntarioRepository){ this.VoluntarioRepository = VoluntarioRepository; }
+    private final VoluntarioRepository voluntarioRepository;
 
-    @PostMapping("/voluntarios")
-    public Voluntario createVoluntario(@RequestBody Voluntario Voluntario){
-        System.out.println("Intento posting...");
-        return VoluntarioRepository.createVoluntario(Voluntario);
+    VoluntarioService(VoluntarioRepository voluntarioRepository) {
+        this.voluntarioRepository = voluntarioRepository;
     }
 
-    @GetMapping("/voluntarios/{id}")
-    public Voluntario getVoluntarioById(@PathVariable Integer id){
-        return VoluntarioRepository.getVoluntarioById(id);
+    @GetMapping("/voluntario")
+    public List<Voluntario> getAll() {
+        return voluntarioRepository.getAll();
     }
 
-    @GetMapping("/voluntarios")
-    public List<Voluntario> getAllVoluntarioes(){
-        return VoluntarioRepository.getAllVoluntarios();
-
-    }
-    @PutMapping("/voluntarios")
-    public Voluntario updateVoluntarioes(@RequestBody Voluntario Voluntario){
-        return VoluntarioRepository.updateVoluntario(Voluntario);
+    @GetMapping("/voluntario/{nombre}/{password}")
+    public List<Voluntario> getVoluntarioLogin(@PathVariable String nombre,@PathVariable String password){
+        return voluntarioRepository.getVoluntarioLogin(nombre, password);
     }
 
-    @DeleteMapping("/voluntarios/{id}")
-    public void deleteVoluntarioById(@PathVariable Integer id){
-        VoluntarioRepository.deleteVoluntarioById(id);
+    @PostMapping("/voluntario/create")
+    @ResponseBody
+    public Voluntario createVoluntario(@RequestBody Voluntario voluntario){
+        Voluntario newVoluntario = voluntarioRepository.createVoluntario(voluntario);
+        return newVoluntario;
     }
 
-    @DeleteMapping("/voluntarios")
-    public void deleteVoluntarioes(){
-        VoluntarioRepository.deleteVoluntarios();
+    @GetMapping("/voluntario/count")
+    public String countVoluntario(){
+        int total = voluntarioRepository.countVoluntarios();
+        return String.format("Se tienen %s voluntarios.", total);
+    }
+
+    @RequestMapping(value = "/voluntario/deleteById/{id}", method = RequestMethod.DELETE)
+    public void deleteVoluntario(@PathVariable long id) {
+        voluntarioRepository.deleteVoluntarioById(id);
+    }
+
+    @RequestMapping(value = "/voluntario/updateById/{id}", method = RequestMethod.PUT)
+    public void updateVoluntario(@RequestBody Voluntario voluntario) {
+        voluntarioRepository.updateVoluntario(voluntario);
+    }
+
+    @RequestMapping(value = "/voluntario/getById/{id}", method = RequestMethod.GET)
+    public List<Voluntario> getVoluntarioById(@PathVariable long id) {
+        return voluntarioRepository.showVoluntarioById(id);
     }
 
 
-    @PostMapping("/voluntarios/view/{id}")
-    public void generateViewByIdEmergencia(@PathVariable String id){
-        System.out.println("Id de emergencia: "+id);
-        System.out.println("Intento posting generate view...");
-        VoluntarioRepository.generateViewByIdEmergencia(id);
-    }
+
 }

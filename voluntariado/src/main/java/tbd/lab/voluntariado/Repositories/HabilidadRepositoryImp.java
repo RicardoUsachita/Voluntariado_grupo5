@@ -10,8 +10,7 @@ import tbd.lab.voluntariado.Models.Habilidad;
 
 import java.util.List;
 
-@Component
-@Configuration
+
 @Repository
 public class HabilidadRepositoryImp implements HabilidadRepository{
 
@@ -19,165 +18,137 @@ public class HabilidadRepositoryImp implements HabilidadRepository{
     @Autowired
     private Sql2o sql2o;
 
+    /**
+     * @return {@value} int cantidad de habilidades
+     * @throws Exception si no se puede obtener la cantidad de habilidades
+     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#countHabilidades()
+     */
     @Override
-    public Integer generateId(){
-        Integer newId;
-        String queryId = "select max(id) from habilidad";
-        Connection conn = sql2o.open();
-        try(conn){
-            System.out.println("Entro dentro de try...");
-            newId=conn.createQuery(queryId)
-                    .executeScalar(Integer.class);
-            if(newId==null){
-                return 0;
-            }
-            else {
-                return newId;
-            }
-
-        }
-        catch(Exception e){
-            System.out.println("Entro en la excepcion...");
-            return 0;
-        }
-        finally {
-            conn.close();
-        }
-
-    }
-
-
-    //Se crea la habilidad
-    @Override
-    public Habilidad createHabilidad(Habilidad habilidad) {
-        if(habilidad.getDescripcion().length()!=0){
-
-            Integer myId = generateId()+1;
-            System.out.println("myId = "+myId);
-            final String query = "insert into habilidad (id,descrip) values (:myId,:descrip)";
-            System.out.println("Intenta conexion...");
-            Connection conn = sql2o.open();
-            try (conn) {
-                System.out.println("Dentro de Intenta conexion...");
-                conn.createQuery(query)
-                        .addParameter("myId", myId)
-                        .addParameter("descrip", habilidad.getDescripcion())
-                        .executeUpdate();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return null;
-            } finally {
-                conn.close();
-            }
-            System.out.println("Conexion exitosa!... Dato ingresado en la base de datos...");
-            return habilidad;
-        }
-        else{
-            System.out.println("Else null createInstitucion...");
-            return null;
+    public int countHabilidades(){
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM habilidad";
+        try (Connection conn = sql2o.open()) {
+            total = conn.createQuery(sql).executeScalar(Integer.class);
+            return total;
         }
     }
 
-
-    //Getter de instituciones por el id, se requiere del id a buscar.
+    /**
+     * @return {@value} int nuevo id
+     * @throws Exception si no se puede obtener el id
+     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#newId()
+     */
     @Override
-    public Habilidad getHabilidadById(Integer id) {
-
-        final String query = "select * from habilidad where id = :id";
-        final Habilidad habilidad;
-        Connection conn = sql2o.open();
-        try(conn){
-            habilidad = conn.createQuery(query)
-                    .addParameter("id", id)
-                    .executeAndFetchFirst(Habilidad.class);
-            return habilidad;
+    public int newId(){
+        int id = 0;
+        String sql = "SELECT MAX(id) FROM habilidad";
+        try (Connection conn = sql2o.open()) {
+            id = conn.createQuery(sql).executeScalar(Integer.class);
+            return id;
         }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        finally {
-            conn.close();
-        }
-
     }
 
-
-    //Getter de todas las habilidades (sin compaginado).
+    /**
+     * @return {@value} List<Habilidad> lista de habilidades
+     * @throws Exception si no se puede obtener la lista de habilidades
+     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#getAll()
+     */
     @Override
-    public List<Habilidad> getAllHabilidad(){
-        final String query = "select * from habilidad";
-        final List<Habilidad> habilidadList;
-        Connection conn = sql2o.open();
-        try(conn){
-            habilidadList = conn.createQuery(query)
+    public List<Habilidad> getAll() {
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM habilidad ORDER BY habilidad.id ASC")
                     .executeAndFetch(Habilidad.class);
-            return habilidadList;
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        finally {
-            conn.close();
-        }
-    }
-    @Override
-    public Habilidad updateHabilidad(Habilidad habilidad) {
-        if(habilidad.getDescripcion().length()!=0){
-            final String query = "update habilidad set descrip = :descrip where id = :id";
-            Connection conn = sql2o.open();
-            try (conn) {
-                conn.createQuery(query)
-                        .addParameter("descrip", habilidad.getDescripcion())
-                        .addParameter("id", habilidad.getId())
-                        .executeUpdate();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return null;
-            } finally {
-                conn.close();
-            }
-            return habilidad;
-        }
-        else{
-            System.out.println("Else null updateInstitucion...");
-            return null;
-        }
-    }
-    @Override
-    public void deleteHabilidadById(Integer id) {
-        final String query = "delete from habilidad where id = :id";
-        Connection conn = sql2o.open();
-        try (conn) {
-            conn.createQuery(query)
-                    .addParameter("id", id)
-                    .executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            conn.close();
-        }
-    }
-    //Hard delete para todas las instituciones.
-    @Override
-    public void deleteHabilidades(){
-        final String query = "DELETE FROM habilidad";
-        Connection conn = sql2o.open();
-        try(conn){
-            conn.createQuery(query)
-                    .executeUpdate();
-            System.out.println("Eliminado con exito...");
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Excepcion...");
-        }
-        finally {
-            conn.close();
+            return null;
         }
     }
 
+    /**
+     * @param {@value} int id
+     * @return {@value} Habilidad habilidad
+     * @throws Exception si no se puede obtener la habilidad
+     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#getById(int)
+     */
+    @Override
+    public List<Habilidad> showHabilidadById(long id){
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM habilidad WHERE habilidad.id = :id")
+                    .addParameter("id", id)
+                    .executeAndFetch(Habilidad.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param {@value} Habilidad habilidad
+     * @return {@value} Habilidad habilidad
+     * @throws Exception si no se puede crear la habilidad
+     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#createHabilidad(Habilidad)
+     */
+    @Override
+    public Habilidad createHabilidad(Habilidad habilidad){
+        Connection conn = sql2o.open();
+
+        String SQL_INSERT = "INSERT INTO habilidad(nombre)" + "VALUES (:nombre2)";
+
+        try{
+            conn.createQuery(SQL_INSERT,true)
+                    .addParameter("nombre2", habilidad.getNombre())
+                    .executeUpdate();
+            habilidad.setId(newId());
+            return habilidad;
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo crear la habilidad\n");
+            return null;
+        }
+
+    }
+
+    /**
+     * @param {@value} int id
+     * @return void
+     * @throws Exception si no se puede eliminar la habilidad
+     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#deleteById(int)
+     */
+    @Override
+    public void deleteHabilidadById(long id){
+        Connection conn = sql2o.open();
+        String SQL_DELETE = "DELETE FROM habilidad WHERE habilidad.id = :id";
+
+        try{
+            conn.createQuery(SQL_DELETE).addParameter("id", id).executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo borrar la habilidad\n");
+        }
+    }
+
+    /**
+     * @param {@value} Habilidad habilidad
+     * @return void
+     * @throws Exception si no se puede actualizar la habilidad
+     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#update(Habilidad)
+     */
+    @Override
+    public void updateHabilidad(Habilidad habilidad){
+
+        String SQL_UPDATE = "UPDATE habilidad SET nombre = :nombre2 WHERE id = :id2";
+
+        try(Connection conn = sql2o.open()) {
+
+            conn.createQuery(SQL_UPDATE)
+                    .addParameter("nombre2", habilidad.getNombre())
+                    .addParameter("id2", habilidad.getId())
+                    .executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo actualizar la habilidad\n");
+        }
+    }
 
 
 }
