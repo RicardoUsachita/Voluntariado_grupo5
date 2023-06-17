@@ -33,6 +33,11 @@
 </template>
 
 <script>
+definePageMeta(
+    {
+      layout: 'detalles'
+    }
+)
 export default {
   data() {
     return {
@@ -47,6 +52,7 @@ export default {
       },
     };
   },
+
   methods: {
     submitForm() {
       // Aquí puedes agregar la lógica para enviar los datos del formulario
