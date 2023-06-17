@@ -13,11 +13,5 @@ public interface RankingRepository {
     public void deleteRankingById(long id);
     public void updateRanking(Ranking ranking);
 
-    /*
-    public List<Ranking_Voluntario> getRankingByIdTarea(long id);
-    */
-
-    public List<Ranking> createRankingByIdTarea(long id);
-    public List<Ranking> createRankingByIdVoluntario(long id);
 
 }
