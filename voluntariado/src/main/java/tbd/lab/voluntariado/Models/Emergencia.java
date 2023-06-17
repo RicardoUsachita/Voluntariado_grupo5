@@ -21,7 +21,7 @@ public class Emergencia {
     private long id;
     private String nombre;
     private String descripcion;
-    private java.sql.Date fecha;
+    private Date fecha;
     private String reqs_grupales;
     private String reqs_individuales;
     private long longitude;

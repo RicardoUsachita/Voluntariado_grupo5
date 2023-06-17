@@ -102,8 +102,8 @@ public class TareaRepositoryImp implements TareaRepository {
     public Tarea createTarea(Tarea tarea){
         Connection conn = sql2o.open();
 
-        String SQL_INSERT = "INSERT INTO tarea(id_emergencia, nombre, descripcion, fecha, requerimientos, longitude, latitude)" +
-                "VALUES (:id_emergencia2, :nombre2, :descripcion2, :fecha2, :requerimientos2, :longitude2, :latitude2)";
+        String SQL_INSERT = "INSERT INTO tarea(id_emergencia, nombre, descripcion, fecha, requerimientos, longitude, latitude, geom)" +
+                "VALUES (:id_emergencia2, :nombre2, :descripcion2, :fecha2, :requerimientos2, :longitude2, :latitude2, ST_MakePoint(:longitude2, :latitude2))";
 
         try{
             conn.createQuery(SQL_INSERT)
@@ -155,7 +155,9 @@ public class TareaRepositoryImp implements TareaRepository {
     @Override
     public void updateTarea(Tarea tarea){
 
-        String SQL_UPDATE = "UPDATE tarea SET id_emergencia = :id_emergencia2, nombre = :nombre2, descripcion = :descripcion2, fecha = :fecha2, requerimientos = :requerimientos2, longitude = :longitude2, latitude = :latitude2, id = :id2 WHERE id = :id2";
+        String SQL_UPDATE = "UPDATE tarea SET id_emergencia = :id_emergencia2, nombre = :nombre2," +
+                " descripcion = :descripcion2, fecha = :fecha2, requerimientos = :requerimientos2, " +
+                "longitude = :longitude2, latitude = :latitude2,geom = ST_MakePoint(:longitude2, :latitude2), id = :id2 WHERE id = :id2";
 
         try(Connection conn = sql2o.open()) {
 

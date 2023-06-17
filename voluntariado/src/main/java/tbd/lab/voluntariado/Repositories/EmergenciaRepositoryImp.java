@@ -89,8 +89,8 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository {
     @Override
     public Emergencia createEmergencia(Emergencia emergencia){
         Connection conn = sql2o.open();
-        String SQL_INSERT = "INSERT INTO emergencia(nombre, descripcion, fecha,reqs_grupales, reqs_individuales,longitude,latitude)" +
-                "VALUES(:nombre2, :descripcion2, :fecha2, :reqs_grupales2, :reqs_individuales2, :longitude2, :latitude2)";
+        String SQL_INSERT = "INSERT INTO emergencia(nombre, descripcion, fecha,reqs_grupales, reqs_individuales,longitude,latitude,geom)" +
+                "VALUES(:nombre2, :descripcion2, :fecha2, :reqs_grupales2, :reqs_individuales2, :longitude2, :latitude2, ST_MakePoint(:longitude2, :latitude2))";
         try{
             conn.createQuery(SQL_INSERT)
                     .addParameter("nombre2", emergencia.getNombre())
@@ -102,6 +102,9 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository {
                     .addParameter("latitude2", emergencia.getLatitude())
                     .executeUpdate();
             emergencia.setId(newId());
+            /* conn.createQuery("update table emergencia set geom = ST_MakePoint(longitude, latitude) where id = :id")
+                    .addParameter("id", emergencia.getId())
+                    .executeUpdate(); */
             return emergencia;
         } catch(Exception e) {
             System.out.println(e.getMessage() + e.getLocalizedMessage() + "No se pudo crear la emergencia\n");
@@ -138,7 +141,9 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository {
     @Override
     public void updateEmergencia(Emergencia emergencia){
 
-        String SQL_UPDATE = "UPDATE emergencia SET nombre = :nombre2, descripcion = :descripcion2, fecha = :fecha2, reqs_grupales = :reqs_grupales2, reqs_individuales = :reqs_individuales2, longitude = :longitude2, latitude = :latitude2, id = :id2 WHERE id = :id2";
+        String SQL_UPDATE = "UPDATE emergencia SET nombre = :nombre2, descripcion = :descripcion2," +
+                " fecha = :fecha2, reqs_grupales = :reqs_grupales2, reqs_individuales = :reqs_individuales2, " +
+                "longitude = :longitude2, latitude = :latitude2,geom = ST_MakePoint(:longitude2,:latitude2), id = :id2 WHERE id = :id2";
         try(Connection conn = sql2o.open()) {
 
             conn.createQuery(SQL_UPDATE)
