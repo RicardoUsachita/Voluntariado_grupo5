@@ -3,7 +3,7 @@
   <div class="container">
     <title> VoluntaRed </title>
     <v-row justify="center" alling="center">
-      <h1 class="text-center">Laboratorio 1 y 2 TBD, grupo 5</h1>
+      <h1 class="text-center">Sistema de Gestión de Voluntariado Espontáneo</h1>
       <hr />
       <!--
       <form action="/emergencies">
