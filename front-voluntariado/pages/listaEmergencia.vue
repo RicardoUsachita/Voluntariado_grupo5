@@ -1,9 +1,22 @@
 <template>
+  <body>
+  <header class="shadow-sm bg-#CA8F28">
+    <title>VoluntaRed</title>
+      <div>
+        <a>
+          <img
+              src="https://i.ibb.co/yRyDcBf/Voluntared-fotor-20230618213813.png"
+              alt="Voluntared-fotor-20230618213813"
+              border="0"
+          />
+        </a>
+      </div>
+  </header>
   <div class="container">
-    <title> TBD laboratorio 1 - Emergencias</title>
+    <title> VoluntaRed - Emergencias</title>
     <h1 class="text-center">Emergencias</h1>
 
-    <div class="center-table">
+    <div class="content-table">
       <form>
         <table class="table table-bordered table-hover" style="center">
           <thead class="thead-dark">
@@ -52,11 +65,6 @@
         </table>
       </form>
     </div>
-    <form action="/">
-      <button type="submit" value="Volver">
-        Volver
-      </button>
-    </form>
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -64,6 +72,12 @@
         crossorigin="anonymous"
     />
   </div>
+  <footer class="container mx-auto p-4 flex justify-between border-t-2">
+    <ul class="flex gap-4">
+      <NuxtLink to="/" class="cta-button">Home</NuxtLink>
+    </ul>
+  </footer>
+  </body>
 </template>
 
 <script>
@@ -123,19 +137,100 @@ export default {
 </script>
 
 <style>
-* {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 40px;
+body {
+  background-color: #FEE9E4;
+  color: #2E5077;
+  font-family: ui-rounded, sans-serif;
+  margin: 0;
+  padding: 0;
 }
-
-div.center-table {
-  margin-left: auto;
-  margin-right: auto;
-  overflow-y: auto;
-  margin-bottom: 40px;
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+body2 {
+  background-color: #CA8F28;
+  color: #2E5077;
+  font-family: ui-rounded, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.header2 {
+  background-color: #87ACA3;
+  padding: 10px;
+  text-align: center;
+}
+header {
+  background-color: #F47784;
+  color: #2E5077;
+  padding: 0px;
+  text-align: center;
+}
+header img {
+  max-width: 250px;
+  height: auto;
+}
+.logo {
+  margin-bottom: 10px;
+}
+.logo h1 {
+  font-family: ui-rounded, sans-serif;
+  font-size: 36px;
+  color: #2E5077;
+}
+h1 {
+  background-color: #FEE9E4;
+  color: #2E5077;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+.content-table {
+  background-color: #FEE9E4;
+  color: #2E5077;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+.content-table th {
+  background-color: #FEE9E4;
+  color: #2E5077;
+  padding: 10px;
+  text-align: left;
+}
+.content-table td {
+  border: 1px solid #FEE9E4;
+  padding: 10px;
+}
+.hero-image {
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
+.hero-text {
+  padding-top: 150px;
+  text-align: center;
+}
+.hero-text h2 {
+  font-size: 24px;
+  color: #2E5077;
+  margin-bottom: 20px;
+}
+.hero-text p {
+  font-size: 24px;
+  color: #2E5077;
+  margin-bottom: 30px;
+}
+.cta-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #FDB35A;
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.buttons-container {
+  text-align: center;
 }
 </style>
