@@ -1,39 +1,36 @@
 <template>
-    <div>
-      <header class="shadow-sm bg-#CA8F28">
-        <title>Registro | VoluntaRed</title>
-        <div>
-          <a>
-            <img
-              src="https://i.ibb.co/yRyDcBf/Voluntared-fotor-20230618213813.png"
-              alt="Voluntared-fotor-20230618213813"
-              border="0"
-            />
-          </a>
-        </div>
-        <div class="flex items-center gap-4">
-          <NuxtLink to="/" class="cta-button">Inicio</NuxtLink>
-          <NuxtLink to="/registroUsuario" class="cta-button">Registro Voluntario</NuxtLink>
-          <NuxtLink to="/registroInstitucion" class="cta-button">Registro Institución</NuxtLink>
-          <NuxtLink to="/login" class="cta-button">Login</NuxtLink>
-          <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
-          <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
-          <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
-        </div>
-      </header>
-      <div class="container">
-      <h1>Formulario de Registro Voluntario</h1>
+  <div>
+    <header class="shadow-sm bg-#CA8F28">
+      <title>VoluntaRed</title>
+      <div>
+        <a>
+          <img
+            src="https://i.ibb.co/yRyDcBf/Voluntared-fotor-20230618213813.png"
+            alt="Voluntared-fotor-20230618213813"
+            border="0"
+          />
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <NuxtLink to="/registroVoluntario" class="cta-button">Registro Voluntario</NuxtLink>
+        <NuxtLink to="/registroInstitucion" class="cta-button">Registro Institucion</NuxtLink>
+        <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
+        <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
+        <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
+      </div>
+    </header>
+    <div class="container">
+      <h1>Formulario de Registro de voluntario</h1>
 
-      <form @submit.prevent="submitForm">
+      <form>
 
         <div class="form-group ">
           <label for="nombre">Nombre:</label>
           <input
+            v-model="nombre"
             type="text"
-            id="nombre"
-            name ="nombre"
-            v-model="formData.nombre"
             class="input-field"
+            name ="nombre"
             placeholder="Ingrese nombre">
         </div>
 
@@ -42,7 +39,7 @@
           <input type="email"
                  id="correo"
                  name="correo"
-                 v-model="formData.correo"
+                 v-model="correo"
                  class="input-field"
                  placeholder="Ingrese correo">
         </div>
@@ -52,7 +49,7 @@
           <input type="text"
                  id="usuario"
                  name="usuario"
-                 v-model="formData.usuario"
+                 v-model="usuario"
                  class="input-field"
                  placeholder="Username">
         </div>
@@ -62,46 +59,52 @@
           <input type="password"
                  id="password"
                  name="password"
-                 v-model="formData.password"
+                 v-model="password"
                  class="input-field"
                  placeholder="Ingrese contraseña">
         </div>
 
         <div class="form-group">
-          <label for="atributos">Descripción:</label>
+          <label for="atributos">Atributos:</label>
           <textarea id="atributos"
-                    v-model="formData.atributos"
+                    v-model="atributos"
                     class="input-field"></textarea>
         </div>
 
-        <button type="submit" class="cta-button2 center">Registrarse</button>
+        <button v-on:click="submitForm" type="submit" class="cta-button2 center">Registrarse</button>
       </form>
-      </div>
-
     </div>
-  </template>
 
-  <script>
-  export default {
-    data() {
-      return {
-        formData: {
-          nombre: '',
-          correo: '',
-          usuario: '',
-          password: '',
-          atributos: ''
-        }
-      }
-    },
-    methods: {
-      submitForm() {
-        let nombreUsuario = this.nombre;
-        console.log(this.formData);
-      }
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      nombre: '',
+      correo: '',
+      usuario: '',
+      password: '',
+      atributos: '',
+
+    }
+  },
+  methods: {
+    submitForm: async function() {
+      let response = await this.$axios.post("/voluntario/create",
+        {
+          nombre: this.nombre,
+          correo: this.correo,
+          usuario: this.usuario,
+          password: this.password,
+          atributos: this.atributos
+
+        });
     }
   }
-  </script>
+}
+</script>
 
 <style>
 body {

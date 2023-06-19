@@ -83,11 +83,13 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     @Override
     public Voluntario createVoluntario(Voluntario voluntario){
         Connection conn = sql2o.open();
-        String SQL_INSERT = "INSERT INTO voluntario(correo, usuario, nombre, password, atributos)" +
-                "VALUES(:correo2, :usuario2, :nombre2, :password2, :atributos2)";
+        String SQL_INSERT = "INSERT INTO voluntario(id, correo, usuario, nombre, password, atributos)" +
+                "VALUES(:id, :correo2, :usuario2, :nombre2, :password2, :atributos2)";
 
         try{
+            voluntario.setId(newId());
             conn.createQuery(SQL_INSERT)
+                    .addParameter("id",voluntario.getId()+1)
                     .addParameter("correo2",voluntario.getCorreo())
                     .addParameter("usuario2",voluntario.getUsuario())
                     .addParameter("nombre2",voluntario.getNombre())
@@ -95,7 +97,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
                     .addParameter("atributos2",voluntario.getAtributos())
                     .executeUpdate();
 
-            voluntario.setId(newId());
+
             return voluntario;
 
         } catch(Exception e) {

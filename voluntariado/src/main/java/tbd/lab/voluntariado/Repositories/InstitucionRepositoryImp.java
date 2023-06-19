@@ -68,11 +68,12 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
     @Override
     public Institucion createInstitucion(Institucion institucion){
         Connection conn = sql2o.open();
-        String SQL_INSERT = "INSERT INTO institucion ( nombre, usuario, password, correo, numero) VALUES ( :nombre2, :usuario2, :password2, :correo2, :numero2)";
+        String SQL_INSERT = "INSERT INTO institucion ( id, nombre, usuario, password, correo, numero) VALUES ( :id, :nombre2, :usuario2, :password2, :correo2, :numero2)";
 
         try{
-
+            institucion.setId(newId());
             conn.createQuery(SQL_INSERT)
+                    .addParameter("id", institucion.getId()+1)
                     .addParameter("nombre2", institucion.getNombre())
                     .addParameter("usuario2",institucion.getUsuario())
                     .addParameter("password2",institucion.getPassword())
@@ -80,7 +81,7 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
                     .addParameter("numero2", institucion.getNumero())
                     .executeUpdate();
 
-            institucion.setId(newId());
+
             return institucion;
 
         } catch(Exception e) {

@@ -11,105 +11,108 @@
           />
         </a>
       </div>
-      <div class="flex items-center gap-4">
-        <NuxtLink to="/" class="cta-button">Inicio</NuxtLink>
-        <NuxtLink to="/registroUsuario" class="cta-button">Registro Voluntario</NuxtLink>
-        <NuxtLink to="/registroInstitucion" class="cta-button">Registro Institución</NuxtLink>
-        <NuxtLink to="/login" class="cta-button">Login</NuxtLink>
-        <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
-        <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
-        <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
-      </div>
     </header>
     <div class="container">
-    <h1 class="text-center">Ingreso de Emergencia</h1>
+      <h1 class="text-center">Ingreso de Emergencia</h1>
 
-    <form @submit.prevent="submitForm" class="form">
-      <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" v-model="formulario.nombre" class="input-field">
+      <form class="form">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" v-model="nombre" class="input-field">
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion">Descripción:</label>
+          <textarea id="descripcion" v-model="descripcion" class="input-field"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fecha">Fecha:</label>
+          <input type="date" id="fecha" v-model="fecha" class="input-field">
+        </div>
+
+        <div class="form-group">
+          <label for="reqs_grupales">Requisitos grupales:</label>
+          <textarea id="reqs_grupales" v-model="reqs_grupales" class="input-field"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="reqs_individuales">Requisitos individuales:</label>
+          <textarea id="reqs_individuales" v-model="reqs_individuales" class="input-field"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="longitude">Longitud:</label>
+          <input type="number" id="longitude" v-model="longitude" class="input-field">
+        </div>
+
+        <div class="form-group">
+          <label for="latitude">Latitud:</label>
+          <input type="number" id="latitude" v-model="latitude" class="input-field">
+        </div>
+
+        <button v-on:click="submitForm" type="submit" class="cta-button2">Enviar</button>
+      </form>
+
+      <h1>Lista de Requisitos</h1>
+
+      <form class="form">
+        <div class="form-group">
+          <label for="task">Habilidad:</label>
+          <input type="text" id="task" v-model="newTask" class="input-field">
+        </div>
+        <button v-on:click="addTask" type="submit" class="cta-button2">Agregar Requisitos de Habilidades</button>
+      </form>
+
+      <div>
+        <h2>Habilidades:</h2>
+        <ul>
+          <li v-for="(task, index) in tasks" :key="index">{{ task }}</li>
+        </ul>
       </div>
-
-      <div class="form-group">
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" v-model="formulario.descripcion" class="input-field"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" v-model="formulario.fecha" class="input-field">
-      </div>
-
-      <div class="form-group">
-        <label for="reqs_grupales">Requisitos grupales:</label>
-        <textarea id="reqs_grupales" v-model="formulario.reqs_grupales" class="input-field"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="reqs_individuales">Requisitos individuales:</label>
-        <textarea id="reqs_individuales" v-model="formulario.reqs_individuales" class="input-field"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="longitude">Longitud:</label>
-        <input type="number" id="longitude" v-model="formulario.longitude" class="input-field">
-      </div>
-
-      <div class="form-group">
-        <label for="latitude">Latitud:</label>
-        <input type="number" id="latitude" v-model="formulario.latitude" class="input-field">
-      </div>
-
-      <button type="submit" class="cta-button2">Enviar</button>
-    </form>
-
-    <h1>Lista de Requisitos</h1>
-
-    <form @submit.prevent="addTask" class="form">
-      <div class="form-group">
-        <label for="task">Habilidad:</label>
-        <input type="text" id="task" v-model="newTask" class="input-field">
-      </div>
-      <button type="submit" class="cta-button2">Agregar Requisitos de Habilidades</button>
-    </form>
-
-    <div>
-      <h2>Habilidades:</h2>
-      <ul>
-        <li v-for="(task, index) in tasks" :key="index">{{ task }}</li>
-      </ul>
     </div>
-  </div>
   </div>
 </template>
 
 
-
+<style>
+/* Your existing styles here */
+</style>
 
 <script>
 export default {
   data() {
     return {
-      formulario: {
-        nombre: '',
-        descripcion: '',
-        fecha: '',
-        reqs_grupales: '',
-        reqs_individuales: '',
-        longitude: 0,
-        latitude: 0,
-      },
+      nombre: '',
+      descripcion: '',
+      fecha: '',
+      reqs_grupales: '',
+      reqs_individuales: '',
+      longitude: 0,
+      latitude: 0,
       newTask: '',
       tasks: []
     };
   },
 
   methods: {
-    submitForm() {
-      // Aquí puedes agregar la lógica para enviar los datos del formulario
-      // a través de una API o realizar cualquier otra acción necesaria.
-      console.log(this.formulario);
+    submitForm: async function() {
+      try {
+        let response = await this.$axios.post("/emergencia/create",
+          {
+
+            nombre: this.nombre,
+            correo: this.correo,
+            usuario: this.usuario,
+            password: this.password,
+            numero: this.numero
+
+          });
+      } catch (error) {
+        console.log("error", error);
+      }
     },
+
     addTask() {
       if (this.newTask !== '') {
         this.tasks.push(this.newTask);

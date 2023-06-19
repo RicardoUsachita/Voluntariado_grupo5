@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="shadow-sm bg-#CA8F28">
-      <title>Registro | VoluntaRed</title>
+      <title>VoluntaRed</title>
       <div>
         <a>
           <img
@@ -12,19 +12,18 @@
         </a>
       </div>
       <div class="flex items-center gap-4">
-        <NuxtLink to="/" class="cta-button">Inicio</NuxtLink>
-        <NuxtLink to="/registroUsuario" class="cta-button">Registro Voluntario</NuxtLink>
-        <NuxtLink to="/registroInstitucion" class="cta-button">Registro Institución</NuxtLink>
-        <NuxtLink to="/login" class="cta-button">Login</NuxtLink>
+        <NuxtLink to="/registroVoluntario" class="cta-button">Registro Voluntario</NuxtLink>
+        <NuxtLink to="/registroInstitucion" class="cta-button">Registro Institucion</NuxtLink>
+        <NuxtLink to="/loginUsuario" class="cta-button">Login</NuxtLink>
         <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
         <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
         <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
       </div>
     </header>
     <div class="container">
-      <h1>Formulario de Registro Institución</h1>
+      <h1>Formulario de Registro de institucion</h1>
 
-      <form @submit.prevent="submitForm">
+      <form>
 
         <div class="form-group ">
           <label for="nombre">Nombre:</label>
@@ -32,9 +31,9 @@
             type="text"
             id="nombre"
             name ="nombre"
-            v-model="formData.nombre"
+            v-model="nombre"
             class="input-field"
-            placeholder="Ingrese nombre">
+            placeholder="Ingrese nombre"/>
         </div>
 
         <div class="form-group">
@@ -42,9 +41,9 @@
           <input type="email"
                  id="correo"
                  name="correo"
-                 v-model="formData.correo"
+                 v-model="correo"
                  class="input-field"
-                 placeholder="Ingrese correo">
+                 placeholder="Ingrese correo"/>
         </div>
 
         <div class="form-group">
@@ -52,9 +51,9 @@
           <input type="text"
                  id="usuario"
                  name="usuario"
-                 v-model="formData.usuario"
+                 v-model="usuario"
                  class="input-field"
-                 placeholder="Username">
+                 placeholder="Username"/>
         </div>
 
         <div class="form-group">
@@ -62,19 +61,22 @@
           <input type="password"
                  id="password"
                  name="password"
-                 v-model="formData.password"
+                 v-model="password"
                  class="input-field"
-                 placeholder="Ingrese contraseña">
+                 placeholder="Ingrese contraseña"/>
         </div>
 
         <div class="form-group">
-          <label for="atributos">Descripción:</label>
-          <textarea id="atributos"
-                    v-model="formData.atributos"
-                    class="input-field"></textarea>
+          <label for="numero">Numero:</label>
+          <input type="text"
+                 id="numero"
+                 name="numero"
+                 v-model="numero"
+                 class="input-field"
+                 placeholder="Ingrese numero de telefono"/>
         </div>
 
-        <button type="submit" class="cta-button2 center">Registrarse</button>
+        <button v-on:click="submitForm" type="submit" class="cta-button2 center">Registrarse</button>
       </form>
     </div>
 
@@ -85,19 +87,30 @@
 export default {
   data() {
     return {
-      formData: {
-        nombre: '',
-        correo: '',
-        usuario: '',
-        password: '',
-        atributos: ''
-      }
+      nombre: '',
+      correo: '',
+      usuario: '',
+      password: '',
+      numero: ''
+
     }
   },
   methods: {
-    submitForm() {
-      let nombreUsuario = this.nombre;
-      console.log(this.formData);
+    submitForm: async function() {
+      try {
+        let response = await this.$axios.post("/institucion/create",
+          {
+
+            nombre: this.nombre,
+            correo: this.correo,
+            usuario: this.usuario,
+            password: this.password,
+            numero: this.numero
+
+          });
+      } catch (error) {
+        console.log("error", error);
+      }
     }
   }
 }

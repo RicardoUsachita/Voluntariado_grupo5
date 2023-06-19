@@ -40,7 +40,6 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
   ],
@@ -52,8 +51,10 @@ export default {
     proxy: true,
   },
   proxy: {
-    "/tarea": 'http://localhost:3000/',
-    "/emergencia": 'http://localhost:3000/',
+    "/tarea": 'http://localhost:3000',
+    "/emergencia": 'http://localhost:3000',
+    "/voluntario/create": 'http://localhost:3000',
+    "/institucion/create": 'http://localhost:3000',
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
