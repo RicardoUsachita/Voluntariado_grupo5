@@ -15,7 +15,6 @@ public class Emergencia {
     private String reqs_individuales;
     private Float longitude;
     private Float latitude;
-
     private long id_institucion;
 
     //CONSTRUCTOR Emergencia

@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="shadow-sm bg-#CA8F28">
-      <title>VoluntaRed - Mapa</title>
+      <title>Ver Mapa | VoluntaRed </title>
       <nav class="container mx-auto p-4 flex justify-between items-center">
         <div>
           <a>
@@ -14,14 +14,18 @@
         </div>
 
         <div class="flex items-center gap-4">
-          <NuxtLink to="/registroUsuario" class="cta-button">Registro</NuxtLink>
-          <NuxtLink to="/loginUsuario" class="cta-button">Login</NuxtLink>
+          <NuxtLink to="/" class="cta-button">Inicio</NuxtLink>
+          <NuxtLink to="/registroUsuario" class="cta-button">Registro Voluntario</NuxtLink>
+          <NuxtLink to="/registroInstitucion" class="cta-button">Registro Institución</NuxtLink>
+          <NuxtLink to="/login" class="cta-button">Login</NuxtLink>
           <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
           <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
           <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
         </div>
       </nav>
     </header>
+    <div class="container"><h1>Vista Mapa</h1></div>
+   
     <div id="mapContainer">
 
     </div>

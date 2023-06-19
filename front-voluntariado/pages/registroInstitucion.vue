@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="shadow-sm bg-#CA8F28">
-      <title>VoluntaRed</title>
+      <title>Registro | VoluntaRed</title>
       <div>
         <a>
           <img
@@ -22,103 +22,87 @@
       </div>
     </header>
     <div class="container">
-    <h1 class="text-center">Ingreso de Emergencia</h1>
+      <h1>Formulario de Registro Institución</h1>
 
-    <form @submit.prevent="submitForm" class="form">
-      <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" v-model="formulario.nombre" class="input-field">
-      </div>
+      <form @submit.prevent="submitForm">
 
-      <div class="form-group">
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" v-model="formulario.descripcion" class="input-field"></textarea>
-      </div>
+        <div class="form-group ">
+          <label for="nombre">Nombre:</label>
+          <input
+            type="text"
+            id="nombre"
+            name ="nombre"
+            v-model="formData.nombre"
+            class="input-field"
+            placeholder="Ingrese nombre">
+        </div>
 
-      <div class="form-group">
-        <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" v-model="formulario.fecha" class="input-field">
-      </div>
+        <div class="form-group">
+          <label for="correo">Correo:</label>
+          <input type="email"
+                 id="correo"
+                 name="correo"
+                 v-model="formData.correo"
+                 class="input-field"
+                 placeholder="Ingrese correo">
+        </div>
 
-      <div class="form-group">
-        <label for="reqs_grupales">Requisitos grupales:</label>
-        <textarea id="reqs_grupales" v-model="formulario.reqs_grupales" class="input-field"></textarea>
-      </div>
+        <div class="form-group">
+          <label for="usuario">Usuario:</label>
+          <input type="text"
+                 id="usuario"
+                 name="usuario"
+                 v-model="formData.usuario"
+                 class="input-field"
+                 placeholder="Username">
+        </div>
 
-      <div class="form-group">
-        <label for="reqs_individuales">Requisitos individuales:</label>
-        <textarea id="reqs_individuales" v-model="formulario.reqs_individuales" class="input-field"></textarea>
-      </div>
+        <div class="form-group">
+          <label for="password">Contraseña:</label>
+          <input type="password"
+                 id="password"
+                 name="password"
+                 v-model="formData.password"
+                 class="input-field"
+                 placeholder="Ingrese contraseña">
+        </div>
 
-      <div class="form-group">
-        <label for="longitude">Longitud:</label>
-        <input type="number" id="longitude" v-model="formulario.longitude" class="input-field">
-      </div>
+        <div class="form-group">
+          <label for="atributos">Descripción:</label>
+          <textarea id="atributos"
+                    v-model="formData.atributos"
+                    class="input-field"></textarea>
+        </div>
 
-      <div class="form-group">
-        <label for="latitude">Latitud:</label>
-        <input type="number" id="latitude" v-model="formulario.latitude" class="input-field">
-      </div>
-
-      <button type="submit" class="cta-button2">Enviar</button>
-    </form>
-
-    <h1>Lista de Requisitos</h1>
-
-    <form @submit.prevent="addTask" class="form">
-      <div class="form-group">
-        <label for="task">Habilidad:</label>
-        <input type="text" id="task" v-model="newTask" class="input-field">
-      </div>
-      <button type="submit" class="cta-button2">Agregar Requisitos de Habilidades</button>
-    </form>
-
-    <div>
-      <h2>Habilidades:</h2>
-      <ul>
-        <li v-for="(task, index) in tasks" :key="index">{{ task }}</li>
-      </ul>
+        <button type="submit" class="cta-button2 center">Registrarse</button>
+      </form>
     </div>
-  </div>
+
   </div>
 </template>
-
-
-
 
 <script>
 export default {
   data() {
     return {
-      formulario: {
+      formData: {
         nombre: '',
-        descripcion: '',
-        fecha: '',
-        reqs_grupales: '',
-        reqs_individuales: '',
-        longitude: 0,
-        latitude: 0,
-      },
-      newTask: '',
-      tasks: []
-    };
-  },
-
-  methods: {
-    submitForm() {
-      // Aquí puedes agregar la lógica para enviar los datos del formulario
-      // a través de una API o realizar cualquier otra acción necesaria.
-      console.log(this.formulario);
-    },
-    addTask() {
-      if (this.newTask !== '') {
-        this.tasks.push(this.newTask);
-        this.newTask = '';
+        correo: '',
+        usuario: '',
+        password: '',
+        atributos: ''
       }
     }
   },
-};
+  methods: {
+    submitForm() {
+      let nombreUsuario = this.nombre;
+      console.log(this.formData);
+    }
+  }
+}
 </script>
+
 <style>
 body {
   background-color: #FEE9E4;

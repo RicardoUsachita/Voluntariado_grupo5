@@ -13,8 +13,9 @@
           </a>
         </div>
         <div class="flex items-center gap-4">
-          <NuxtLink to="/registroUsuario" class="cta-button">Registro</NuxtLink>
-          <NuxtLink to="/loginUsuario" class="cta-button">Login</NuxtLink>
+          <NuxtLink to="/registroUsuario" class="cta-button">Registro Voluntario</NuxtLink>
+          <NuxtLink to="/registroInstitucion" class="cta-button">Registro Institución</NuxtLink>
+          <NuxtLink to="/login" class="cta-button">Login</NuxtLink>
           <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
           <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
           <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>

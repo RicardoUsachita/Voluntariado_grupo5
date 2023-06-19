@@ -1,18 +1,31 @@
 <template>
   <body>
-
-  <header class="shadow-sm bg-#CA8F28">
-    <title>VoluntaRed</title>
-      <div>
-        <a>
-          <img
+  <div>
+    <header class="shadow-sm bg-#CA8F28">
+      <title>Emergencias | VoluntaRed</title>
+      <nav class="container mx-auto p-4 flex justify-between items-center">
+        <div>
+          <a>
+            <img
               src="https://i.ibb.co/yRyDcBf/Voluntared-fotor-20230618213813.png"
               alt="Voluntared-fotor-20230618213813"
               border="0"
-          />
-        </a>
-      </div>
-  </header>
+            />
+          </a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <NuxtLink to="/" class="cta-button">Inicio</NuxtLink>
+          <NuxtLink to="/registroUsuario" class="cta-button">Registro Voluntario</NuxtLink>
+          <NuxtLink to="/registroInstitucion" class="cta-button">Registro Institución</NuxtLink>
+          <NuxtLink to="/login" class="cta-button">Login</NuxtLink>
+          <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
+          <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
+          <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
+        </div>
+      </nav>
+    </header>
+  </div>
   <div class="container">
     <title> VoluntaRed - Emergencias</title>
     <h1 class="text-center">Emergencias</h1>
@@ -26,35 +39,24 @@
             <th>Asunto</th>
             <th>Fecha</th>
             <th>Estado</th>
-            <th colspan="1">Acciones</th>
           </tr>
           </thead>
           <tbody>
-          <tr
-              v-for="emergency in emergencies"
-              v-bind:key="emergency.id"
-          >
+          <tr v-for="emergency in emergencies" v-bind:key="emergency.id">
             <th>{{ emergency.id }}</th>
             <th>{{ emergency.nombre }}</th>
             <th>{{ emergency.descripcion }}</th>
             <th>{{ emergency.fecha }}</th>
-            <td>
-              <router-link
-                  v-on:click="guardarId"
-                  :to="'/getById-id/' + emergency.id_emergencia"
-              ><button>Ver</button></router-link
-              >
-            </td>
           </tr>
           </tbody>
         </table>
       </form>
     </div>
     <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-        crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
     />
   </div>
   <footer class="container mx-auto p-4 flex justify-between border-t-2">
@@ -64,6 +66,7 @@
   </footer>
   </body>
 </template>
+
 
 <script>
 export default {

@@ -1,7 +1,8 @@
 <template>
-    <div>
-      <header class="shadow-sm bg-#CA8F28">
-        <title>Registro | VoluntaRed</title>
+  <div>
+    <header class="shadow-sm bg-#CA8F28">
+      <title>Login | VoluntaRed</title>
+      <nav class="container mx-auto p-4 flex justify-between items-center">
         <div>
           <a>
             <img
@@ -20,88 +21,57 @@
           <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
           <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
         </div>
-      </header>
+      </nav>
+    </header>
+    <div>
       <div class="container">
-      <h1>Formulario de Registro Voluntario</h1>
-
-      <form @submit.prevent="submitForm">
-
-        <div class="form-group ">
-          <label for="nombre">Nombre:</label>
-          <input
-            type="text"
-            id="nombre"
-            name ="nombre"
-            v-model="formData.nombre"
-            class="input-field"
-            placeholder="Ingrese nombre">
-        </div>
-
+        <h1>Iniciar sesión</h1>
+      <form @submit.prevent="login">
         <div class="form-group">
-          <label for="correo">Correo:</label>
-          <input type="email"
-                 id="correo"
-                 name="correo"
-                 v-model="formData.correo"
-                 class="input-field"
-                 placeholder="Ingrese correo">
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" v-model="credentials.correo">
         </div>
-
-        <div class="form-group">
-          <label for="usuario">Usuario:</label>
-          <input type="text"
-                 id="usuario"
-                 name="usuario"
-                 v-model="formData.usuario"
-                 class="input-field"
-                 placeholder="Username">
-        </div>
-
         <div class="form-group">
           <label for="password">Contraseña:</label>
-          <input type="password"
-                 id="password"
-                 name="password"
-                 v-model="formData.password"
-                 class="input-field"
-                 placeholder="Ingrese contraseña">
+          <input type="password" id="password" v-model="credentials.password">
         </div>
-
-        <div class="form-group">
-          <label for="atributos">Descripción:</label>
-          <textarea id="atributos"
-                    v-model="formData.atributos"
-                    class="input-field"></textarea>
-        </div>
-
-        <button type="submit" class="cta-button2 center">Registrarse</button>
+        <button type="submit" class="cta-button2">Iniciar sesión</button>
       </form>
-      </div>
-
     </div>
-  </template>
+    </div>
+  </div>
+</template>
 
-  <script>
-  export default {
-    data() {
-      return {
-        formData: {
-          nombre: '',
-          correo: '',
-          usuario: '',
-          password: '',
-          atributos: ''
-        }
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      credentials: {
+        email: '',
+        password: ''
       }
-    },
-    methods: {
-      submitForm() {
-        let nombreUsuario = this.nombre;
-        console.log(this.formData);
-      }
+    };
+  },
+  methods: {
+    login() {
+      axios.post('/api/login', this.credentials)
+        .then(response => {
+          // Procesar la respuesta del servidor
+          console.log(response.data);
+        })
+        .catch(error => {
+          // Manejar errores de solicitud
+          console.error(error);
+        });
     }
   }
-  </script>
+};
+</script>
+
+
 
 <style>
 body {
@@ -220,3 +190,5 @@ h1 {
 }
 
 </style>
+<script setup>
+</script>
