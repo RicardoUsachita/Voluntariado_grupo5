@@ -1,15 +1,15 @@
 INSERT INTO emergencia (id_institucion, nombre, descripcion, fecha, reqs_grupales, reqs_individuales, longitude, latitude)
 VALUES
-    (2,'Incendio', 'Incendio en un edificio residencial', '2023-06-10', 'Equipo de bomberos', 'Ambulancia', -73.987, 40.712),
-    (2,'Fuga de gas', 'Fuga de gas en una planta industrial', '2023-06-09', 'Equipo de bomberos', 'Equipo de seguridad', -74.006, 40.730),
-    (3,'Accidente de trafico', 'Colision multiple en una autopista', '2023-06-11', 'Equipo de rescate', 'Ambulancia', -73.995, 40.718),
-    (4,'Inundacion', 'Inundacion en un vecindario', '2023-06-08', 'Equipo de rescate', 'Equipo de evacuacion', -73.986, 40.730),
-    (3,'Derrumbe', 'Derrumbe en una construccion', '2023-06-07', 'Equipo de rescate', 'Equipo de seguridad', -74.003, 40.704),
-    (1,'Incendio forestal', 'Incendio en un bosque cercano', '2023-06-10', 'Equipo de bomberos', 'Equipo de rescate', -73.973, 40.707),
-    (5,'Accidente quimico', 'Derrame de productos quimicos en una fabrica', '2023-06-11', 'Equipo de seguridad', 'Equipo de rescate', -73.988, 40.726),
-    (4,'Terremoto', 'Terremoto de magnitud 7.5 en la region', '2023-06-09', 'Equipo de rescate', 'Equipo de evacuacion', -73.997, 40.710),
-    (3,'Avalancha', 'Avalancha en una zona montanosa', '2023-06-12', 'Equipo de rescate', 'Helicoptero', -73.978, 40.702),
-    (2,'Explosion', 'Explosion en un edificio comercial', '2023-06-13', 'Equipo de bomberos', 'Equipo de seguridad', -73.992, 40.719);
+    (2,'Incendio', 'Incendio en un edificio residencial', '2023-06-10', 'Equipo de bomberos', 'Ambulancia', -79.8684,-33.7122),
+    (2,'Fuga de gas', 'Fuga de gas en una planta industrial', '2023-06-09', 'Equipo de bomberos', 'Equipo de seguridad', -70.51496,-33.35781),
+    (3,'Accidente de trafico', 'Colision multiple en una autopista', '2023-06-11', 'Equipo de rescate', 'Ambulancia', -70.5022,-33.1891),
+    (4,'Inundacion', 'Inundacion en un vecindario', '2023-06-08', 'Equipo de rescate', 'Equipo de evacuacion', -69.619,-17.694),
+    (3,'Derrumbe', 'Derrumbe en una construccion', '2023-06-07', 'Equipo de rescate', 'Equipo de seguridad', -70.2844,-33.5822),
+    (1,'Incendio forestal', 'Incendio en un bosque cercano', '2023-06-10', 'Equipo de bomberos', 'Equipo de rescate', -71.3279,-33.9139),
+    (5,'Accidente quimico', 'Derrame de productos quimicos en una fabrica', '2023-06-11', 'Equipo de seguridad', 'Equipo de rescate', -73.9248,-38.3771),
+    (4,'Terremoto', 'Terremoto de magnitud 7.5 en la region', '2023-06-09', 'Equipo de rescate', 'Equipo de evacuacion', -71.5632,-39.2627),
+    (3,'Avalancha', 'Avalancha en una zona montanosa', '2023-06-12', 'Equipo de rescate', 'Helicoptero', -71.995,-37.076),
+    (2,'Explosion', 'Explosion en un edificio comercial', '2023-06-13', 'Equipo de bomberos', 'Equipo de seguridad', -109.5043,-27.0906);
 
 INSERT INTO voluntario (correo, usuario, nombre, pass, atributos)
 VALUES
@@ -26,28 +26,28 @@ VALUES
 
 INSERT INTO tarea (id_emergencia, nombre, descripcion, fecha, requerimientos, longitude, latitude)
 VALUES
-    (1, 'Control de fuego', 'Controlar y extinguir el incendio', '2023-06-10', 'Equipo de bomberos, Mangueras, Extintores', -73.987, 40.712),
-    (2, 'Reparacion de fuga', 'Reparar la fuga de gas en la planta industrial', '2023-06-09', 'Equipo de reparacion, Suministros de seguridad', -74.006, 40.730),
-    (3, 'Rescate en accidente', 'Rescatar a las personas atrapadas en el accidente de trafico', '2023-06-11', 'Equipo de rescate, Equipo de extraccion', -73.995, 40.718),
-    (4, 'Evacuacion por inundacion', 'Realizar la evacuacion de las personas afectadas por la inundacion', '2023-06-08', 'Equipo de rescate, Botes salvavidas', -73.986, 40.730),
-    (5, 'Busqueda y rescate', 'Buscar y rescatar a las personas atrapadas en el derrumbe', '2023-06-07', 'Equipo de busqueda, Equipos de seguridad', -74.003, 40.704),
-    (6, 'Control de incendio forestal', 'Controlar y extinguir el incendio en el bosque cercano', '2023-06-10', 'Equipo de bomberos, Mangueras, Helicopteros', -73.973, 40.707),
-    (2, 'Limpieza de derrame quimico', 'Limpiar el derrame de productos quimicos en la fabrica', '2023-06-11', 'Equipo de limpieza, Materiales de contencion', -73.988, 40.726),
-    (8, 'Busqueda y rescate tras terremoto', 'Buscar y rescatar a las personas atrapadas tras el terremoto', '2023-06-09', 'Equipo de rescate, Perros de busqueda', -73.997, 40.710),
-    (9, 'Rescate en avalancha', 'Rescatar a las personas atrapadas en la zona montanosa por una avalancha', '2023-06-12', 'Equipo de rescate, Equipos de supervivencia', -73.978, 40.702),
-    (10, 'Investigacion de explosion', 'Investigar la causa de la explosion en el edificio comercial', '2023-06-13', 'Equipo de investigacion, Equipos de seguridad', -73.992, 40.719),
-    (4, 'Evacuacion por inundacion costera', 'Realizar la evacuacion de las personas afectadas por la inundacion costera', '2023-06-14', 'Equipo de rescate, Botes salvavidas', -73.982, 40.714),
+    (1, 'Control de fuego', 'Controlar y extinguir el incendio', '2023-06-10', 'Equipo de bomberos, Mangueras, Extintores', -79.8684,-33.7122),
+    (2, 'Reparacion de fuga', 'Reparar la fuga de gas en la planta industrial', '2023-06-09', 'Equipo de reparacion, Suministros de seguridad', -70.51496,-33.35781),
+    (3, 'Rescate en accidente', 'Rescatar a las personas atrapadas en el accidente de trafico', '2023-06-11', 'Equipo de rescate, Equipo de extraccion', -70.5022,-33.1891),
+    (4, 'Evacuacion por inundacion', 'Realizar la evacuacion de las personas afectadas por la inundacion', '2023-06-08', 'Equipo de rescate, Botes salvavidas', -69.619,-17.694),
+    (5, 'Busqueda y rescate', 'Buscar y rescatar a las personas atrapadas en el derrumbe', '2023-06-07', 'Equipo de busqueda, Equipos de seguridad', -70.2844,-33.5822),
+    (6, 'Control de incendio forestal', 'Controlar y extinguir el incendio en el bosque cercano', '2023-06-10', 'Equipo de bomberos, Mangueras, Helicopteros', -71.3279,-33.9139),
+    (2, 'Limpieza de derrame quimico', 'Limpiar el derrame de productos quimicos en la fabrica', '2023-06-11', 'Equipo de limpieza, Materiales de contencion', -70.51496,-33.35781),
+    (8, 'Busqueda y rescate tras terremoto', 'Buscar y rescatar a las personas atrapadas tras el terremoto', '2023-06-09', 'Equipo de rescate, Perros de busqueda', -71.5632,-39.2627),
+    (9, 'Rescate en avalancha', 'Rescatar a las personas atrapadas en la zona montanosa por una avalancha', '2023-06-12', 'Equipo de rescate, Equipos de supervivencia', -71.995,-37.076),
+    (10, 'Investigacion de explosion', 'Investigar la causa de la explosion en el edificio comercial', '2023-06-13', 'Equipo de investigacion, Equipos de seguridad', -109.5043,-27.0906),
+    (4, 'Evacuacion por inundacion costera', 'Realizar la evacuacion de las personas afectadas por la inundacion costera', '2023-06-14', 'Equipo de rescate, Botes salvavidas', -69.619,-17.694),
     (9, 'Rescate en deslizamiento de tierra', 'Rescatar a las personas atrapadas en el deslizamiento de tierra en la zona residencial', '2023-06-10', 'Equipo de rescate, Equipos de seguridad', -73.997, 40.723),
-    (1, 'Evacuacion de edificio', 'Realizar la evacuacion del edificio afectado por el incendio', '2023-06-10', 'Equipo de rescate, Botes salvavidas', -73.987, 40.712),
-    (1, 'Investigacion de causas', 'Realizar la investigacion de las causas del incendio', '2023-06-11', 'Equipo de investigacion, Equipos de seguridad', -73.987, 40.712),
-    (2, 'Reparacion de equipos', 'Reparar los equipos afectados por la fuga de gas', '2023-06-12', 'Equipo de reparacion, Suministros de seguridad', -74.006, 40.730),
-    (2, 'Inspeccion de seguridad', 'Realizar una inspeccion de seguridad en la planta industrial', '2023-06-13', 'Equipo de inspeccion, Equipos de seguridad', -74.006, 40.730),
-    (3, 'Rescate de heridos', 'Rescatar y brindar primeros auxilios a los heridos en el accidente de trafico', '2023-06-12', 'Equipo de rescate, Equipo medico', -73.995, 40.718),
-    (3, 'Limpieza de via', 'Realizar la limpieza de la via afectada por el accidente', '2023-06-13', 'Equipo de limpieza, Maquinaria de construccion', -73.995, 40.718),
-    (4, 'Reubicacion de afectados', 'Reubicar a las personas afectadas por la inundacion en refugios temporales', '2023-06-09', 'Equipo de rescate, Vehiculos de transporte', -73.986, 40.730),
-    (4, 'Reparacion de infraestructura', 'Reparar la infraestructura dañada por la inundacion', '2023-06-10', 'Equipo de reparacion, Herramientas de construccion', -73.986, 40.730),
-    (5, 'Busqueda y rescate en estructuras colapsadas', 'Buscar y rescatar a las personas atrapadas en las estructuras colapsadas debido al derrumbe', '2023-06-11', 'Equipo de búsqueda, Equipos de seguridad', -74.003, 40.704),
-    (5, 'Remocion de escombros', 'Realizar la remocion de escombros y asegurar la zona del derrumbe', '2023-06-12', 'Equipo de limpieza, Maquinaria de construccion', -74.003, 40.704);
+    (1, 'Evacuacion de edificio', 'Realizar la evacuacion del edificio afectado por el incendio', '2023-06-10', 'Equipo de rescate, Botes salvavidas', -79.8684,-33.7122),
+    (1, 'Investigacion de causas', 'Realizar la investigacion de las causas del incendio', '2023-06-11', 'Equipo de investigacion, Equipos de seguridad', -79.8684,-33.7122),
+    (2, 'Reparacion de equipos', 'Reparar los equipos afectados por la fuga de gas', '2023-06-12', 'Equipo de reparacion, Suministros de seguridad', -70.51496,-33.35781),
+    (2, 'Inspeccion de seguridad', 'Realizar una inspeccion de seguridad en la planta industrial', '2023-06-13', 'Equipo de inspeccion, Equipos de seguridad', -70.51496,-33.35781),
+    (3, 'Rescate de heridos', 'Rescatar y brindar primeros auxilios a los heridos en el accidente de trafico', '2023-06-12', 'Equipo de rescate, Equipo medico', -70.5022,-33.1891),
+    (3, 'Limpieza de via', 'Realizar la limpieza de la via afectada por el accidente', '2023-06-13', 'Equipo de limpieza, Maquinaria de construccion', -70.5022,-33.1891),
+    (4, 'Reubicacion de afectados', 'Reubicar a las personas afectadas por la inundacion en refugios temporales', '2023-06-09', 'Equipo de rescate, Vehiculos de transporte', -69.619,-17.694),
+    (4, 'Reparacion de infraestructura', 'Reparar la infraestructura dañada por la inundacion', '2023-06-10', 'Equipo de reparacion, Herramientas de construccion',-69.619,-17.694),
+    (5, 'Busqueda y rescate en estructuras colapsadas', 'Buscar y rescatar a las personas atrapadas en las estructuras colapsadas debido al derrumbe', '2023-06-11', 'Equipo de búsqueda, Equipos de seguridad', -70.2844,-33.5822),
+    (5, 'Remocion de escombros', 'Realizar la remocion de escombros y asegurar la zona del derrumbe', '2023-06-12', 'Equipo de limpieza, Maquinaria de construccion', -70.2844,-33.5822);
 
 insert into estado (nombre) values 
     ('Asignada'),
