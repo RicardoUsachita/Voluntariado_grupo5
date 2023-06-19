@@ -14,11 +14,7 @@ import java.util.List;
 public class TareaRepositoryImp implements TareaRepository {
     @Autowired
     private Sql2o sql2o;
-    /**
-     * @return {@value} int cantidad de tareas
-     * @throws Exception si no se puede obtener la cantidad de tareas
-     * @see tbd.lab.voluntariado.Repositories.TareaRepository#countTareas()
-     */
+
     @Override
     public int countTareas(){
         int total = 0;
@@ -29,11 +25,7 @@ public class TareaRepositoryImp implements TareaRepository {
         }
     }
 
-    /**
-     * @return {@value} int nuevo id
-     * @throws Exception si no se puede obtener el id
-     * @see tbd.lab.voluntariado.Repositories.TareaRepository#newId()
-     */
+
     @Override
     public int newId(){
         int id = 0;
@@ -44,11 +36,7 @@ public class TareaRepositoryImp implements TareaRepository {
         }
     }
 
-    /**
-     * @return {@value} List<Tarea> lista de tareas
-     * @throws Exception si no se puede obtener la lista de tareas
-     * @see tbd.lab.voluntariado.Repositories.TareaRepository#getAll()
-     */
+
     @Override
     public List<Tarea> getAll() {
         try(Connection conn = sql2o.open()){
@@ -60,26 +48,8 @@ public class TareaRepositoryImp implements TareaRepository {
         }
     }
 
-    /*
-    @Override
-    public List<Tarea> getAllTareasEmergency(long id)
-    {
-        try(Connection conn = sql2o.open()){
-            return conn.createQuery("SELECT DISTINCT tFinal.id, tFinal.nombre,tFinal.descripcion,tFinal.fecha,tFinal.requerimientos FROM (SELECT tHT.id_tarea as id, tHT.nombre, tHT.descripcion, tHT.fecha, tHT.requerimientos FROM (SELECT t1.id as id_tarea, t1.nombre, t1.descripcion, t1.fecha, t1.requerimientos, t3.id FROM tarea t1, tareahabilidad t2, habilidad t3 WHERE t1.id = t2.idtarea AND t3.id = t2.idhabilidad) tHT INNER JOIN(SELECT t6.id as id_habilidad, t4.id as id_emergencia FROM emergencia t4, emergenciahabilidad t5, habilidad t6 WHERE t4.id = t5.idemergencia AND t6.id = t5.idhabilidad) tHE ON  tHT.id_tarea =tHE.id_habilidad AND tHE.id_emergencia = :id) tFinal; ")
-                .addParameter("id", id)
-                .executeAndFetch(Tarea.class);
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }*/
 
-    /**
-     * @param id {@value} long id de la tarea
-     * @return {@value} List<Tarea> lista de tareas
-     * @throws Exception si no se puede obtener la lista de tareas
-     * @see tbd.lab.voluntariado.Repositories.TareaRepository#showTareaById(long id)
-     */
+
     @Override
     public List<Tarea> showTareaById(long id){
         try(Connection conn = sql2o.open()){
@@ -92,12 +62,7 @@ public class TareaRepositoryImp implements TareaRepository {
         }
     }
 
-    /**
-     * @param tarea {@value} Tarea tarea a crear
-     * @return {@value} Tarea tarea creada
-     * @throws Exception si no se puede crear la tarea
-     * @see tbd.lab.voluntariado.Repositories.TareaRepository#createTarea(Tarea tarea)
-     */
+
     @Override
     public Tarea createTarea(Tarea tarea){
         Connection conn = sql2o.open();
@@ -126,12 +91,7 @@ public class TareaRepositoryImp implements TareaRepository {
         }
     }
 
-    /**
-     * @param id {@value} long id de la tarea
-     * @return {@value} Tarea tarea eliminada
-     * @throws Exception si no se puede eliminar la tarea
-     * @see tbd.lab.voluntariado.Repositories.TareaRepository#deleteTarea(long id)
-     */
+
     @Override
     public void deleteTareaById(long id){
         Connection conn = sql2o.open();
@@ -146,12 +106,7 @@ public class TareaRepositoryImp implements TareaRepository {
     }
 
 
-    /**
-     * @param tarea {@value} Tarea tarea a actualizar
-     * @return {@value} Tarea tarea actualizada
-     * @throws Exception si no se puede actualizar la tarea
-     * @see tbd.lab.voluntariado.Repositories.TareaRepository#updateTarea(Tarea tarea)
-     */
+
     @Override
     public void updateTarea(Tarea tarea){
 
@@ -181,12 +136,7 @@ public class TareaRepositoryImp implements TareaRepository {
 
     //COMPLEMENTARIOS
 
-    /**
-     * @param id {@value} long id de la emergencia
-     * @return {@value} List<Tarea> lista de tareas
-     * @throws Exception si no se puede obtener la lista de tareas
-     * @see tbd.lab.voluntariado.Repositories.TareaRepository#showTareaByIdEmergencia(long id)
-     */
+
     @Override
     public List<Tarea> getTareaByIdEmergencia(long id){
         String SQL_SELECT = "SELECT * FROM tarea WHERE tarea.id_emergencia = :id";

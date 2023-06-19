@@ -15,11 +15,7 @@ public class EmeHabilidadRepositoryImp implements EmeHabilidadRepository{
     @Autowired
     private Sql2o sql2o;
 
-    /**
-     * @return {@value} int cantidad de emergencias_habilidades
-     * @throws Exception si no se puede obtener la cantidad de emergencias_habilidades
-     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#countEmergenciaHabilidades()
-     */
+
     @Override
     public int countEmergenciaHabilidades(){
         int total = 0;
@@ -30,11 +26,7 @@ public class EmeHabilidadRepositoryImp implements EmeHabilidadRepository{
         }
     }
 
-    /**
-     * @return {@value} int nuevo id
-     * @throws Exception si no se puede obtener el id
-     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#newId()
-     */
+
     @Override
     public int newId(){
         int id = 0;
@@ -45,11 +37,7 @@ public class EmeHabilidadRepositoryImp implements EmeHabilidadRepository{
         }
     }
 
-    /**
-     * @return {@value} List<Emergencia_Habilidad> lista de emergencias_habilidades
-     * @throws Exception si no se puede obtener la lista de emergencias_habilidades
-     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#getAll()
-     */
+
     @Override
     public List<EmeHabilidad> getAll() {
         try(Connection conn = sql2o.open()){
@@ -61,12 +49,7 @@ public class EmeHabilidadRepositoryImp implements EmeHabilidadRepository{
         }
     }
 
-    /**
-     * @param {@value} int id
-     * @return {@value} Emergencia_Habilidad emergencia_habilidad
-     * @throws Exception si no se puede obtener la emergencia_habilidad
-     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#showEmergenciaHabilidadById(long id)
-     */
+
     @Override
     public List<EmeHabilidad> showEmergenciaHabilidadById(long id){
         try(Connection conn = sql2o.open()){
@@ -79,12 +62,7 @@ public class EmeHabilidadRepositoryImp implements EmeHabilidadRepository{
         }
     }
 
-    /**
-     * @param {@value} Emergencia_Habilidad emergencia_habilidad
-     * @return {@value} Emergencia_Habilidad emergencia_habilidad
-     * @throws Exception si no se puede crear la emergencia_habilidad
-     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#createEmergenciaHabilidad(EmeHabilidad emergenciaHabilidad)
-     */
+
     @Override
     public EmeHabilidad createEmergenciaHabilidad(EmeHabilidad emergencia_habilidad) {
         Connection conn = sql2o.open();
@@ -108,12 +86,7 @@ public class EmeHabilidadRepositoryImp implements EmeHabilidadRepository{
         }
     }
 
-    /**
-     * @param {@value} Emergencia_Habilidad emergencia_habilidad
-     * @return {@value} Emergencia_Habilidad emergencia_habilidad
-     * @throws Exception si no se puede actualizar la emergencia_habilidad
-     * @see tbd.lab.voluntariado.Repositories.EmeHabilidadRepository#updateEmergenciaHabilidad(EmeHabilidad emergenciaHabilidad)
-     */
+
     @Override
     public void deleteEmergenciaHabilidadById(long id){
         Connection conn = sql2o.open();

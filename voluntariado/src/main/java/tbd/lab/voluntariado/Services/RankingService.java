@@ -11,34 +11,25 @@ import java.util.List;
 public class RankingService {
     private final RankingRepository rankingRepository;
 
-    /**
-     * @param rankingRepository
-     */
+
     RankingService(RankingRepository rankingRepository) {
         this.rankingRepository = rankingRepository;
     }
 
-    /**
-     * @return {@value} List<Ranking> lista de rankings
-     */
+
     @GetMapping
     public List<Ranking> getAll() {
         return rankingRepository.getAll();
     }
 
-    /**
-     * @return {@value} cantidad de rankings
-     */
+
     @GetMapping("/count")
     public String countRanking(){
         int total = rankingRepository.countAllRanks();
         return String.format("Se tienen %s rankings.", total);
     }
 
-    /**
-     * @param ranking ranking a crear
-     * @return {@value} Ranking ranking
-     */
+
     @PostMapping("/create")
     @ResponseBody
     public Ranking createRanking(@RequestBody Ranking ranking){
@@ -46,28 +37,19 @@ public class RankingService {
         return newRanking;
     }
 
-    /**
-     * @param id id de ranking
-     * @return void
-     */
+
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE)
     public void deleteRanking(@PathVariable long id) {
         rankingRepository.deleteRankingById(id);
     }
 
-    /**
-     * @param ranking ranking a actualizar
-     * @return void
-     */
+
     @RequestMapping(value = "/updateById/{id}", method = RequestMethod.PUT)
     public void updateRanking(@RequestBody Ranking ranking) {
         rankingRepository.updateRanking(ranking);
     }
 
-    /**
-     * @param id id de ranking
-     * @return {@value} <List>Ranking ranking
-     */
+
     @RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
     public List<Ranking> getRankingById(@PathVariable long id) {
         return rankingRepository.showRankingById(id);

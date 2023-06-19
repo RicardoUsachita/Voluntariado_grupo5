@@ -16,11 +16,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository {
     @Autowired
     private Sql2o sql2o;
 
-    /**
-     * @return {@value} int cantidad de emergencias
-     * @throws Exception si no se puede obtener la cantidad de emergencias
-     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#countEmergencias()
-     */
+
     @Override
     public int countEmergencias(){
         int total = 0;
@@ -31,11 +27,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository {
         }
     }
 
-    /**
-     * @return {@value} int nuevo id
-     * @throws Exception si no se puede obtener el id
-     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#newId()
-     */
+
     @Override
     public int newId(){
         int id = 0;
@@ -46,11 +38,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository {
         }
     }
 
-    /**
-     * @return {@value} List<Emergencia> lista de emergencias
-     * @throws Exception si no se puede obtener la lista de emergencias
-     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#getAll()
-     */
+
     @Override
     public List<Emergencia> getAll() {
         try(Connection conn = sql2o.open()){
@@ -62,12 +50,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository {
         }
     }
 
-    /**
-     * @param id {@value} long id de emergencia
-     * @return {@value} List<Emergencia> id lista de emergencias
-     * @throws Exception si no se puede obtener la lista de emergencias
-     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#showEmergenciaById(long id)
-     */
+
     @Override
     public List<Emergencia> showEmergenciaById(long id){
         try(Connection conn = sql2o.open()){
@@ -80,12 +63,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository {
         }
     }
 
-    /**
-     * @param emergencia {@value} Emergencia emergencia
-     * @return {@value} Emergencia emergencia
-     * @throws Exception si no se puede crear la emergencia
-     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#createEmergencia(Emergencia emergencia)
-     */
+
     @Override
     public Emergencia createEmergencia(Emergencia emergencia){
         Connection conn = sql2o.open();
@@ -113,12 +91,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository {
     }
 
 
-    /**
-     * @param id {@value} long id de emergencia
-     * @return void
-     * @throws Exception si no se puede eliminar la emergencia
-     * @see tbd.lab.voluntariado.Repositories.EmergenciaRepository#deleteEmergencia(long id)
-     */
+
     @Override
     public void deleteEmergenciaById(long id){
         Connection conn = sql2o.open();

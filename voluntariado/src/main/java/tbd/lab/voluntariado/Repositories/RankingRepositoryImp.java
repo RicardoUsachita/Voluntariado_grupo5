@@ -21,12 +21,7 @@ public class RankingRepositoryImp implements RankingRepository{
 
         @Autowired
         private Sql2o sql2o;
-        /**
-         * @param ranking {@value} Ranking ranking a crear
-         * @return {@value} Ranking ranking creado
-         * @throws Exception si no se puede crear el ranking
-         * @see tbd.lab.voluntariado.Repositories.RankingRepository#createRanking(tbd.lab.voluntariado.Models.Ranking)
-         */
+
         @Override
         public Ranking createRanking(Ranking ranking){
                 Connection conn = sql2o.open();
@@ -51,11 +46,7 @@ public class RankingRepositoryImp implements RankingRepository{
                 }
         }
 
-        /**
-         * @return {@value} int cantidad de rankings
-         * @throws Exception si no se puede obtener la cantidad de rankings
-         * @see tbd.lab.voluntariado.Repositories.RankingRepository#countAllRanks()
-         */
+
         @Override
         public int countAllRanks() {
                 int total = 0;
@@ -66,11 +57,7 @@ public class RankingRepositoryImp implements RankingRepository{
                 }
         }
 
-        /**
-         * @return {@value} int nuevo id
-         * @throws Exception si no se puede obtener el id
-         * @see tbd.lab.voluntariado.Repositories.RankingRepository#newID()
-         */
+
         @Override
         public int newID() {
                 int id = 0;
@@ -81,12 +68,7 @@ public class RankingRepositoryImp implements RankingRepository{
                 }
         }
 
-        /**
-         * @return {@value} List<Ranking> todos los rankings
-         * @throws Exception si no se puede obtener los rankings
-         * @see tbd.lab.voluntariado.Repositories.RankingRepository#getAll()
-         * @see tbd.lab.voluntariado.Models.Ranking
-         */
+
         @Override
         public List<Ranking> getAll() {
                 try(Connection conn = sql2o.open()){
@@ -98,12 +80,7 @@ public class RankingRepositoryImp implements RankingRepository{
                 }
         }
 
-        /**
-         * @param id {@value} long id del ranking a obtener
-         * @return {@value} List<Ranking> ranking obtenido
-         * @throws Exception si no se puede obtener el ranking
-         * @see tbd.lab.voluntariado.Repositories.RankingRepository#showRankingById(long)
-         */
+
         @Override
         public List<Ranking> showRankingById(long id) {
 
@@ -117,11 +94,7 @@ public class RankingRepositoryImp implements RankingRepository{
                 }
         }
 
-        /**
-         * @param ranking {@value} Ranking ranking a eliminar
-         * @throws Exception si no se puede eliminar el ranking
-         * @see tbd.lab.voluntariado.Repositories.RankingRepository#deleteRankingById(tbd.lab.voluntariado.Models.Ranking)
-         */
+
         @Override
         public void deleteRankingById(long id) {
                 Connection conn = sql2o.open();
@@ -135,12 +108,7 @@ public class RankingRepositoryImp implements RankingRepository{
                 }
         }
 
-        /**
-         * @param ranking {@value} Ranking ranking a actualizar
-         * @return {@value} Ranking ranking actualizado
-         * @throws Exception si no se puede actualizar el ranking
-         * @see tbd.lab.voluntariado.Repositories.RankingRepository#updateRanking(tbd.lab.voluntariado.Models.Ranking)
-         */
+
         @Override
         public void updateRanking(Ranking ranking) {
                 String SQL_UPDATE = "UPDATE ranking SET porcentaje = :porcentaje2, id_voluntario = :id_voluntario2, id_tarea = :id_tarea2, id = :id2 WHERE id = :id2";

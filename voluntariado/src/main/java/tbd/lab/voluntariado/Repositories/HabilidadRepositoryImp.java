@@ -18,11 +18,7 @@ public class HabilidadRepositoryImp implements HabilidadRepository{
     @Autowired
     private Sql2o sql2o;
 
-    /**
-     * @return {@value} int cantidad de habilidades
-     * @throws Exception si no se puede obtener la cantidad de habilidades
-     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#countHabilidades()
-     */
+
     @Override
     public int countHabilidades(){
         int total = 0;
@@ -33,11 +29,7 @@ public class HabilidadRepositoryImp implements HabilidadRepository{
         }
     }
 
-    /**
-     * @return {@value} int nuevo id
-     * @throws Exception si no se puede obtener el id
-     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#newId()
-     */
+
     @Override
     public int newId(){
         int id = 0;
@@ -48,11 +40,7 @@ public class HabilidadRepositoryImp implements HabilidadRepository{
         }
     }
 
-    /**
-     * @return {@value} List<Habilidad> lista de habilidades
-     * @throws Exception si no se puede obtener la lista de habilidades
-     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#getAll()
-     */
+
     @Override
     public List<Habilidad> getAll() {
         try(Connection conn = sql2o.open()){
@@ -64,12 +52,7 @@ public class HabilidadRepositoryImp implements HabilidadRepository{
         }
     }
 
-    /**
-     * @param {@value} int id
-     * @return {@value} Habilidad habilidad
-     * @throws Exception si no se puede obtener la habilidad
-     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#getById(int)
-     */
+
     @Override
     public List<Habilidad> showHabilidadById(long id){
         try(Connection conn = sql2o.open()){
@@ -82,12 +65,7 @@ public class HabilidadRepositoryImp implements HabilidadRepository{
         }
     }
 
-    /**
-     * @param {@value} Habilidad habilidad
-     * @return {@value} Habilidad habilidad
-     * @throws Exception si no se puede crear la habilidad
-     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#createHabilidad(Habilidad)
-     */
+
     @Override
     public Habilidad createHabilidad(Habilidad habilidad){
         Connection conn = sql2o.open();
@@ -108,12 +86,7 @@ public class HabilidadRepositoryImp implements HabilidadRepository{
 
     }
 
-    /**
-     * @param {@value} int id
-     * @return void
-     * @throws Exception si no se puede eliminar la habilidad
-     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#deleteById(int)
-     */
+
     @Override
     public void deleteHabilidadById(long id){
         Connection conn = sql2o.open();
@@ -127,12 +100,7 @@ public class HabilidadRepositoryImp implements HabilidadRepository{
         }
     }
 
-    /**
-     * @param {@value} Habilidad habilidad
-     * @return void
-     * @throws Exception si no se puede actualizar la habilidad
-     * @see tbd.lab.voluntariado.Repositories.HabilidadRepository#update(Habilidad)
-     */
+
     @Override
     public void updateHabilidad(Habilidad habilidad){
 

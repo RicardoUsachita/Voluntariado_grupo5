@@ -17,11 +17,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     @Autowired
     private Sql2o sql2o;
 
-    /**
-     * @return {@value} int cantidad de voluntarios
-     * @throws Exception si no se puede obtener la cantidad de voluntarios
-     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#countVoluntarios()
-     */
+
     @Override
     public int countVoluntarios(){
         int total = 0;
@@ -32,11 +28,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
-    /**
-     * @return {@value} int nuevo id
-     * @throws Exception si no se puede obtener el id
-     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#newId()
-     */
+
     @Override
     public int newId(){
         int id = 0;
@@ -47,11 +39,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
-    /**
-     * @return {@value} List<Voluntario> lista de voluntarios
-     * @throws Exception si no se puede obtener la lista de voluntarios
-     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#getAll()
-     */
+
     @Override
     public List<Voluntario> getAll() {
         try(Connection conn = sql2o.open()){
@@ -63,12 +51,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
-    /**
-     * @param id {@value} int id del voluntario
-     * @return {@value} Voluntario voluntario
-     * @throws Exception si no se puede obtener el voluntario
-     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#showVoluntarioById(int id)
-     */
+
     @Override
     public List<Voluntario> showVoluntarioById(long id){
         try(Connection conn = sql2o.open()){
@@ -81,13 +64,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
-    /**
-     * @param nombre {@value} String nombre del voluntario
-     * @param password {@value} String password del voluntario
-     * @return {@value} List<Voluntario> lista de voluntarios
-     * @throws Exception si no se puede obtener la lista de voluntarios
-     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#getVoluntarioLogin(String nombre, String password)
-     */
+
     @Override
     public List<Voluntario> getVoluntarioLogin(String nombre,String password){
         try(Connection conn = sql2o.open())
@@ -102,12 +79,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
-    /**
-     * @param voluntario {@value} Voluntario voluntario
-     * @return {@value} Voluntario voluntario
-     * @throws Exception si no se puede crear el voluntario
-     * @see tbd.lab.voluntariado.Repositories.VoluntarioRepository#createVoluntario(Voluntario voluntario)
-     */
+
     @Override
     public Voluntario createVoluntario(Voluntario voluntario){
         Connection conn = sql2o.open();
@@ -132,10 +104,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
-    /**
-     * @param id {@value} int id del voluntario
-     * @return void
-     */
+
     @Override
     public void deleteVoluntarioById(long id){
         Connection conn = sql2o.open();
@@ -149,10 +118,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
-    /**
-     * @param voluntario {@value} Voluntario voluntario
-     * @return void
-     */
+
     @Override
     public void updateVoluntario(Voluntario voluntario){
 

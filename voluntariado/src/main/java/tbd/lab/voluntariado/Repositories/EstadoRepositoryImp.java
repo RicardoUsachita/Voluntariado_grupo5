@@ -13,11 +13,7 @@ public class EstadoRepositoryImp implements EstadoRepository{
     @Autowired
     private Sql2o sql2o;
 
-    /**
-     * @return {@value} int cantidad de estados
-     * @throws Exception si no se puede obtener la cantidad de estados
-     * @see tbd.lab.voluntariado.Repositories.EstadoRepository#countEstados()
-     */
+
     @Override
     public int countEstados(){
         int total = 0;
@@ -28,11 +24,7 @@ public class EstadoRepositoryImp implements EstadoRepository{
         }
     }
 
-    /**
-     * @return {@value} int nuevo id
-     * @throws Exception si no se puede obtener el id
-     * @see tbd.lab.voluntariado.Repositories.EstadoRepository#newId()
-     */
+
     @Override
     public int newId(){
         int id = 0;
@@ -43,11 +35,7 @@ public class EstadoRepositoryImp implements EstadoRepository{
         }
     }
 
-    /**
-     * @return {@value} List<Estado> lista de estados
-     * @throws Exception si no se puede obtener la lista de estados
-     * @see tbd.lab.voluntariado.Repositories.EstadoRepository#getAll()
-     */
+
     @Override
     public List<Estado> getAll() {
         try(Connection conn = sql2o.open()){
@@ -59,11 +47,7 @@ public class EstadoRepositoryImp implements EstadoRepository{
         }
     }
 
-    /**
-     * @param id {@value} int id del estado
-     * @return {@value} Estado estado
-     * @throws Exception si no se puede obtener el estado
-     */
+
     @Override
     public List<Estado> showEstadoById(long id){
         try(Connection conn = sql2o.open()){
@@ -76,12 +60,7 @@ public class EstadoRepositoryImp implements EstadoRepository{
         }
     }
 
-    /**
-     * @param estado {@value} Estado estado
-     * @return {@value} Estado estado
-     * @throws Exception si no se puede crear el estado
-     * @see tbd.lab.voluntariado.Repositories.EstadoRepository#createEstado(tbd.lab.voluntariado.Models.Estado)
-     */
+
     @Override
     public Estado createEstado(Estado estado){
         Connection conn = sql2o.open();
@@ -101,11 +80,6 @@ public class EstadoRepositoryImp implements EstadoRepository{
         }
     }
 
-    /**
-     * @param id {@value} int id del estado
-     * @throws Exception si no se puede eliminar el estado
-     * @see tbd.lab.voluntariado.Repositories.EstadoRepository#deleteEstadoById(long)
-     */
     @Override
     public void deleteEstadoById(long id){
         Connection conn = sql2o.open();
@@ -119,10 +93,7 @@ public class EstadoRepositoryImp implements EstadoRepository{
         }
     }
 
-    /**
-     * @param estado {@value} Estado estado
-     * @throws Exception si no se puede actualizar el estado
-     */
+
     @Override
     public void updateEstado(Estado estado){
 

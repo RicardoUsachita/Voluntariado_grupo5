@@ -45,125 +45,91 @@ public class Tarea {
 
     //GETTERS TAREA
 
-    /**
-     * @return id
-     */
+
     public long getId() {
         return id;
     }
 
-    /**
-     * @return id_emergencia
-     */
+
     public long getId_emergencia() {
         return id_emergencia;
     }
 
-    /**
-     * @return nombre
-     */
+
     public String getNombre() {
         return nombre;
     }
 
-    /**
-     * @return descripcion
-     */
+
     public String getDescripcion() {
         return descripcion;
     }
 
-    /**
-     * @return fecha
-     */
+
     public java.sql.Date getFecha() {
         return fecha;
     }
 
-    /**
-     * @return requerimientos
-     */
+
     public String getRequerimientos() {
         return requerimientos;
     }
 
-    /**
-     * @return longitude
-     */
+
     public long getLongitude() {
         return longitude;
     }
 
-    /**
-     * @return latitude
-     */
+
     public long getLatitude() {
         return latitude;
     }
 
     //SETTERS TAREA
 
-    /**
-     * @param id de la tarea
-     */
+
     public void setId(long id) {
         this.id = id;
     }
 
-    /**
-     * @param id_emergencia de la tarea
-     */
+
     public void setId_emergencia(long id_emergencia) {
         this.id_emergencia = id_emergencia;
     }
 
-    /**
-     * @param nombre de la tarea
-     */
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    /**
-     * @param descripcion de la tarea
-     */
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    /**
-     * @param fecha de la tarea
-     */
+
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    /**
-     * @param requerimientos de la tarea
-     */
+
     public void setRequerimientos(String requerimientos) {
         this.requerimientos = requerimientos;
     }
 
-    /**
-     * @param longitude de la tarea
-     */
+
     public void setLongitude(long longitude) {
         this.longitude = longitude;
     }
 
-    /**
-     * @param latitude de la tarea
-     */
+
     public void setLatitude(long latitude) {
         this.latitude = latitude;
     }
 
     //TOSTRING TAREA
 
-    /**
-     * @return String con los datos de la tarea
-     */
+
     @Override
     public String toString() {
         return "Tarea [id=" + id + ", id_emergencia=" + id_emergencia + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fecha=" + fecha + ", requerimientos=" + requerimientos + ", longitude=" + longitude + ", latitude=" + latitude + "]";

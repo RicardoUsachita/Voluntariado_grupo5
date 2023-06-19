@@ -204,7 +204,8 @@ VALUES
     (9, 19),
     (10, 20);
 
-
+UPDATE emergencia set geom = ST_MakePoint(latitude, longitude);
+UPDATE tarea set geom = ST_MakePoint(latitude, longitude);
 
 
 
