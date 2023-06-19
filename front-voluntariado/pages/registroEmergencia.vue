@@ -32,6 +32,22 @@
       </div>
       <button type="submit" class="submit-button">Enviar</button>
     </form>
+    <h1>Lista de Tareas</h1>
+  
+      <form @submit.prevent="addTask">
+        <div class="form-group">
+          <label for="task">Tarea:</label>
+          <input type="text" id="task" v-model="newTask" class="input-field">
+        </div>
+        <button type="submit" class="submit-button">Agregar Requisitos de Habilidades</button>
+      </form>
+  
+      <div>
+        <h2>Habilidades:</h2>
+        <ul>
+          <li v-for="(task, index) in tasks" :key="index">{{ task }}</li>
+        </ul>
+      </div>
   </div>
 </template>
 
@@ -52,6 +68,8 @@ export default {
         longitude: 0,
         latitude: 0,
       },
+      newTask: '',
+      tasks: []
     };
   },
 
@@ -61,6 +79,12 @@ export default {
       // a través de una API o realizar cualquier otra acción necesaria.
       console.log(this.formulario);
     },
+    addTask() {
+      if (this.newTask !== '') {
+        this.tasks.push(this.newTask);
+        this.newTask = '';
+      }
+    }
   },
 };
 </script>
