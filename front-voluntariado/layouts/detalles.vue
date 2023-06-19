@@ -1,28 +1,25 @@
 <template>
-    <div>
-        <header class="shadow-sm ">
-            <nav class="container mx-auto p-4">
-                <ul class="flex gap-4">
-                  <li><a><img src="https://i.ibb.co/fndvJzb/Whats-App-Image-2023-06-17-at-16-40-12.jpg" alt="Whats-App-Image-2023-06-17-at-16-40-12" border="0">"</a></li>
-                    <li><NuxtLink to="/" class="cta-button">VoluntaRed</NuxtLink></li>
-                </ul>
-            </nav>
-        </header>
-<!-- output the page content-->
-<div class="container mx-auto p-4">
-    <slot/> //acá va el contenido de cada página
-</div>
-
+  <div>
+    <header class="shadow-sm">
+      <nav class="container mx-auto p-4">
+        <ul class="flex gap-4">
+          <li><a><img src="https://i.ibb.co/fndvJzb/Whats-App-Image-2023-06-17-at-16-40-12.jpg" alt="Whats-App-Image-2023-06-17-at-16-40-12" border="0"></a></li>
+          <li><NuxtLink to="/" class="cta-button">VoluntaRed</NuxtLink></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container mx-auto p-4">
+      <slot></slot> <!-- Content of each page goes here -->
     </div>
-<footer class="container mx-auto p-4 flex justify-between border-t-2">
-    <ul class="flex gap-4">
+    <footer class="container mx-auto p-4 flex justify-between border-t-2">
+      <ul class="flex gap-4">
         <li><NuxtLink to="/" class="cta-button">Home</NuxtLink></li>
         <li><NuxtLink to="/about" class="cta-button">About</NuxtLink></li>
         <li><NuxtLink to="/contact" class="cta-button">Contact</NuxtLink></li>
-    </ul>
-</footer>
+      </ul>
+    </footer>
+  </div>
 </template>
-
 <style>
 
 body {
