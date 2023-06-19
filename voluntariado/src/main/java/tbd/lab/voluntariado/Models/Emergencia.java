@@ -6,18 +6,7 @@ import java.sql.Date;
 
 @EntityScan
 public class Emergencia {
-    /**
-     * ATRIBUTOS DE Emergencia
-     * @param id de la emergencia
-     * @param nombre de la emergencia
-     * @param descripcion de la emergencia
-     * @param fecha de la emergencia
-     * @param reqs_grupales de la emergencia
-     * @param reqs_individuales de la emergencia
-     * @param longitude de la emergencia
-     * @param latitude de la emergencia
 
-     */
     private long id;
     private String nombre;
     private String descripcion;

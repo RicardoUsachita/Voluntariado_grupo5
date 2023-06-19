@@ -1,4 +1,4 @@
-INSERT INTO emergencia (nombre, descripcion, fecha, reqs_grupales, reqs_individuales, longitude, latitude)
+INSERT INTO emergencia (id_institucion, nombre, descripcion, fecha, reqs_grupales, reqs_individuales, longitude, latitude)
 VALUES
     (2,'Incendio', 'Incendio en un edificio residencial', '2023-06-10', 'Equipo de bomberos', 'Ambulancia', -73.987, 40.712),
     (2,'Fuga de gas', 'Fuga de gas en una planta industrial', '2023-06-09', 'Equipo de bomberos', 'Equipo de seguridad', -74.006, 40.730),
@@ -204,8 +204,7 @@ VALUES
     (9, 19),
     (10, 20);
 
-UPDATE emergencia set geom = ST_MakePoint(latitude, longitude);
-UPDATE tarea set geom = ST_MakePoint(latitude, longitude);
+
 
 
 
