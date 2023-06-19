@@ -54,11 +54,11 @@
       <button type="submit" class="cta-button2">Enviar</button>
     </form>
 
-    <h1>Lista de Tareas</h1>
+    <h1>Lista de Requisitos</h1>
 
     <form @submit.prevent="addTask" class="form">
       <div class="form-group">
-        <label for="task">Tarea:</label>
+        <label for="task">Habilidad:</label>
         <input type="text" id="task" v-model="newTask" class="input-field">
       </div>
       <button type="submit" class="cta-button2">Agregar Requisitos de Habilidades</button>
