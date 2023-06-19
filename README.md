@@ -9,7 +9,6 @@
 - Hernán Aravena (Backend)
 - Bryan Salgado (Fronted)
 - Constanza Palomo (Fronted)
-- Andrés Haussmann (Frontend)
 - Semestre: 1-2023
 - Fecha de entrega: 19/06/2023
 
