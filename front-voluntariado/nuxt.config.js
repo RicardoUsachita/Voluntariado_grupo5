@@ -1,6 +1,10 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+  // Se cambia el puerto del front a 8080
+  server: {
+    port:8080,
+  },
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -44,7 +48,8 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://localhost:3000',
+    proxy: true,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
