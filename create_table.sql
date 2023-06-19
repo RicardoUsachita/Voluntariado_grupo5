@@ -24,6 +24,3 @@ CREATE TABLE IF NOT EXISTS estado_tarea (id serial primary key, id_estado serial
 CREATE TABLE IF NOT EXISTS tarea_habilidad (id serial primary key, id_tarea serial, id_habilidad serial);
 
 CREATE TABLE IF NOT EXISTS voluntario_habilidad (id serial primary key, id_voluntario serial, id_habilidad serial);
-
-CREATE TABLE IF NOT EXISTS audit_log  (id serial PRIMARY KEY, table_name text, operation text, user_id integer, timestamp timestamp, query text);
-
