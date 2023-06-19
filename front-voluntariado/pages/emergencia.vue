@@ -119,9 +119,7 @@ export default {
     this.getData();
   },
 };
-definePageMeta({
-  layout: "detalles",
-})
+
 </script>
 
 <style>
