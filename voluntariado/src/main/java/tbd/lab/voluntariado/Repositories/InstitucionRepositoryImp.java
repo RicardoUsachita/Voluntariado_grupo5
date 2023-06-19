@@ -17,11 +17,7 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
     //Implementacion de firmas a traves del uso de sql2o para la conexion con la DB.
     @Autowired
     private Sql2o sql2o;
-    /**
-     * @return {@value} int cantidad de instituciones
-     * @throws Exception si no se puede obtener la cantidad de instituciones
-     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#countInstituciones()
-     */
+
     @Override
     public int countInstituciones(){
         int total = 0;
@@ -32,11 +28,7 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
         }
     }
 
-    /**
-     * @return {@value} int nuevo id
-     * @throws Exception si no se puede obtener el id
-     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#newId()
-     */
+
     @Override
     public int newId(){
         int id = 0;
@@ -47,11 +39,7 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
         }
     }
 
-    /**
-     * @return {@value} List<Institucion> lista de instituciones
-     * @throws Exception si no se puede obtener la lista de instituciones
-     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#getAll()
-     */
+
     @Override
     public List<Institucion> getAll() {
         try(Connection conn = sql2o.open()){
@@ -63,12 +51,7 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
         }
     }
 
-    /**
-     * @param id {@value} int id de la institucion
-     * @return {@value} Institucion institucion
-     * @throws Exception si no se puede obtener la institucion
-     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#getById(int)
-     */
+
     @Override
     public List<Institucion> showInstitucionById(long id){
         try(Connection conn = sql2o.open()){
@@ -81,12 +64,7 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
         }
     }
 
-    /**
-     * @param nombre {@value} String nombre de la institucion
-     * @return {@value} List<Institucion> lista de instituciones
-     * @throws Exception si no se puede obtener la lista de instituciones
-     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#getByNombre(String)
-     */
+
     @Override
     public Institucion createInstitucion(Institucion institucion){
         Connection conn = sql2o.open();
@@ -111,12 +89,7 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
         }
     }
 
-    /**
-     * @param institucion {@value} Institucion institucion
-     * @return {@value} Institucion institucion
-     * @throws Exception si no se puede actualizar la institucion
-     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#updateInstitucion(Institucion)
-     */
+
     @Override
     public void deleteInstitucionById(long id){
         Connection conn = sql2o.open();
@@ -130,12 +103,7 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
         }
     }
 
-    /**
-     * @param institucion {@value} Institucion institucion
-     * @return {@value} Institucion institucion
-     * @throws Exception si no se puede actualizar la institucion
-     * @see tbd.lab.voluntariado.Repositories.InstitucionRepository#updateInstitucion(Institucion)
-     */
+
     @Override
     public void updateInstitucion(Institucion institucion){
 

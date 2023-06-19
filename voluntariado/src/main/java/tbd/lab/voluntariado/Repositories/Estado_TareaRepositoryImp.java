@@ -12,11 +12,7 @@ import java.util.List;
 public class Estado_TareaRepositoryImp implements Estado_TareaRepository {
     @Autowired
     private Sql2o sql2o;
-    /**
-     * @return {@value} int cantidad de estados de tarea
-     * @throws Exception si no se puede obtener la cantidad de estados de tarea
-     * @see tbd.lab.voluntariado.Repositories.Estado_TareaRepository#countEstadosTarea()
-     */
+
     @Override
     public int countEstadosTarea(){
         int total = 0;
@@ -27,11 +23,7 @@ public class Estado_TareaRepositoryImp implements Estado_TareaRepository {
         }
     }
 
-    /**
-     * @return {@value} int nuevo id
-     * @throws Exception si no se puede obtener el id
-     * @see tbd.lab.voluntariado.Repositories.Estado_TareaRepository#newId()
-     */
+
     @Override
     public int newId(){
         int id = 0;
@@ -42,11 +34,7 @@ public class Estado_TareaRepositoryImp implements Estado_TareaRepository {
         }
     }
 
-    /**
-     * @return {@value} List<Estado_Tarea> lista de estados de tarea
-     * @throws Exception si no se puede obtener la lista de estados de tarea
-     * @see tbd.lab.voluntariado.Repositories.Estado_TareaRepository#getAll()
-     */
+
     @Override
     public List<Estado_Tarea> getAll() {
         try(Connection conn = sql2o.open()){
@@ -58,12 +46,7 @@ public class Estado_TareaRepositoryImp implements Estado_TareaRepository {
         }
     }
 
-    /**
-     * @param id {@value} int id de estado de tarea
-     * @return {@value} Estado_Tarea estado de tarea
-     * @throws Exception si no se puede obtener el estado de tarea
-     * @see tbd.lab.voluntariado.Repositories.Estado_TareaRepository#showEstadoTareaById(long id)
-     */
+
     @Override
     public List<Estado_Tarea> showEstadoTareaById(long id){
         try(Connection conn = sql2o.open()){
@@ -76,12 +59,7 @@ public class Estado_TareaRepositoryImp implements Estado_TareaRepository {
         }
     }
 
-    /**
-     * @param estado_tarea {@value} Estado_Tarea estado de tarea
-     * @return {@value} Estado_Tarea estado de tarea
-     * @throws Exception si no se puede crear el estado de tarea
-     * @see tbd.lab.voluntariado.Repositories.Estado_TareaRepository#createEstadoTarea(Estado_Tarea estado_tarea)
-     */
+
     @Override
     public Estado_Tarea createEstadoTarea(Estado_Tarea estado_tarea){
         Connection conn = sql2o.open();
@@ -106,12 +84,7 @@ public class Estado_TareaRepositoryImp implements Estado_TareaRepository {
         }
     }
 
-    /**
-     * @param id {@value} int id de estado de tarea
-     * @return {@value} Estado_Tarea estado de tarea
-     * @throws Exception si no se puede eliminar el estado de tarea
-     * @see tbd.lab.voluntariado.Repositories.Estado_TareaRepository#deleteEstadoTarea(long id)
-     */
+
     @Override
     public void deleteEstadoTareaById(long id){
         Connection conn = sql2o.open();
@@ -125,12 +98,7 @@ public class Estado_TareaRepositoryImp implements Estado_TareaRepository {
         }
     }
 
-    /**
-     * @param estado_tarea {@value} Estado_Tarea estado de tarea
-     * @return {@value} Estado_Tarea estado de tarea
-     * @throws Exception si no se puede actualizar el estado de tarea
-     * @see tbd.lab.voluntariado.Repositories.Estado_TareaRepository#updateEstadoTarea(Estado_Tarea estado_tarea)
-     */
+
     @Override
     public void updateEstadoTarea(Estado_Tarea estado_tarea){
 

@@ -12,16 +12,12 @@ public class EstadoService {
 
     private final EstadoRepository estadoRepository;
 
-    /**
-     * @param estadoRepository
-     */
+
     EstadoService(EstadoRepository estadoRepository){
         this.estadoRepository = estadoRepository;
     }
 
-    /**
-     * @return {@value} List<Estado> lista de estados
-     */
+
 
     @GetMapping
     public List<Estado> getAllEstados(){
@@ -30,19 +26,13 @@ public class EstadoService {
     }
 
 
-    /**
-     * @param id id de estado
-     * @return {@value} Estado estado
-     */
+
     @GetMapping("/getById/{id}")
     public List<Estado> getEstadoById(@PathVariable long id){
         return estadoRepository.showEstadoById(id);
     }
 
-    /**
-     * @param estado
-     * @return {@value} Estado estado
-     */
+
     @GetMapping("/count")
     public String countEstado(){
         int total = estadoRepository.countEstados();
@@ -50,10 +40,7 @@ public class EstadoService {
     }
 
 
-    /**
-     * @param estado
-     * @return {@value} Estado estado
-     */
+
     @PostMapping("/create")
     @ResponseBody
     public Estado createEstado(@RequestBody Estado estado){
@@ -61,19 +48,13 @@ public class EstadoService {
         return newEstado;
     }
 
-    /**
-     * @param estado
-     * @return void
-     */
+
     @RequestMapping(value = "/deleteById/{id}", produces = "application/json", method = {RequestMethod.GET, RequestMethod.DELETE})
     public void deleteEstado(@PathVariable long id){
         estadoRepository.deleteEstadoById(id);
     }
 
-    /**
-     * @param estado
-     * @return void
-     */
+
     @RequestMapping(value = "/updateById/{id}", method = {RequestMethod.PUT})
     public void updateEstado(@RequestBody Estado estado){
         estadoRepository.updateEstado(estado);
