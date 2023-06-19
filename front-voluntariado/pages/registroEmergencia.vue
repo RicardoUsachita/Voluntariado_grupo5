@@ -10,6 +10,15 @@
             border="0"
           />
         </a>
+        <div class="flex items-center gap-4">
+          <NuxtLink to="/" class="cta-button">Inicio</NuxtLink>
+          <NuxtLink to="/registroUsuario" class="cta-button">Registro Voluntario</NuxtLink>
+          <NuxtLink to="/registroInstitucion" class="cta-button">Registro Institución</NuxtLink>
+          <NuxtLink to="/login" class="cta-button">Login</NuxtLink>
+          <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
+          <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
+          <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
+        </div>
       </div>
     </header>
     <div class="container">
