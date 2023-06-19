@@ -185,5 +185,9 @@ h1 {
 .form-group {
   margin-bottom: 1em;
 }
+.input-field {
+  font-size: 1.1em; /* Aumenta el tamaño de la fuente */
+  padding: 0.5em; /* Ajusta el relleno para hacer el campo de entrada ligeramente más grande */
+}
 
 </style>

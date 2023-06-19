@@ -51,7 +51,7 @@
         <input type="number" id="latitude" v-model="formulario.latitude" class="input-field">
       </div>
 
-      <button type="submit" class="submit-button">Enviar</button>
+      <button type="submit" class="cta-button2">Enviar</button>
     </form>
 
     <h1>Lista de Tareas</h1>
@@ -61,7 +61,7 @@
         <label for="task">Tarea:</label>
         <input type="text" id="task" v-model="newTask" class="input-field">
       </div>
-      <button type="submit" class="submit-button">Agregar Requisitos de Habilidades</button>
+      <button type="submit" class="cta-button2">Agregar Requisitos de Habilidades</button>
     </form>
 
     <div>
@@ -70,6 +70,15 @@
         <li v-for="(task, index) in tasks" :key="index">{{ task }}</li>
       </ul>
     </div>
+    <footer class="container mx-auto p-4 flex justify-between border-t-2">
+      <ul class="flex gap-4">
+        <NuxtLink to="/" class="cta-button">Home</NuxtLink>
+        <NuxtLink to="/loginUsuario" class="cta-button">Login</NuxtLink>
+        <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
+        <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
+        <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
+      </ul>
+    </footer>
   </div>
 </template>
 
@@ -205,7 +214,27 @@ h1 {
   text-decoration: none;
   border-radius: 4px;
 }
+.cta-button2 {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #FDB35A;
+  color: #fff;
+  font-family: ui-rounded, sans-serif;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 4px;
+}
 .buttons-container {
   text-align: center;
+}
+.form-group {
+  margin-bottom: 1em;
+  font-family: ui-rounded, sans-serif;
+  font-size: 1em;
+  color: #2E5077;
+}
+.input-field {
+  font-size: 1.1em; /* Aumenta el tamaño de la fuente */
+  padding: 0.5em; /* Ajusta el relleno para hacer el campo de entrada ligeramente más grande */
 }
 </style>

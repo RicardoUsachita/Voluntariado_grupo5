@@ -1,5 +1,6 @@
 <template>
   <body>
+
   <header class="shadow-sm bg-#CA8F28">
     <title>VoluntaRed</title>
       <div>
@@ -227,6 +228,15 @@ h1 {
   background-color: #FDB35A;
   color: #fff;
   font-size: 20px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.cta-button2 {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #FDB35A;
+  color: #fff;
+  font-size: 15px;
   text-decoration: none;
   border-radius: 4px;
 }
