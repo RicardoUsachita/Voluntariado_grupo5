@@ -4,7 +4,7 @@
 CREATE OR REPLACE PROCEDURE get_top_users_with_queries()
 AS $$
 DECLARE
-    user_id_val integer;
+    user_val text;
     total_queries_val integer;
     query_val text;
     audit_log_count integer;
@@ -19,32 +19,31 @@ BEGIN
     END IF;
     
     CREATE TEMPORARY TABLE top_users_with_queries (
-        user_id integer,
+        usuario text,
         total_queries_count integer,
         query text
     );
 
     INSERT INTO top_users_with_queries (
-        user_id,
+        usuario,
         total_queries_count,
         query
     )
-    SELECT user_id, COUNT(*) AS total_queries, MAX(query) AS query
+    SELECT usuario, COUNT(*) AS total_queries, MAX(query) AS query
     FROM audit_log
     WHERE operation IN ('INSERT', 'UPDATE', 'DELETE')
-    GROUP BY user_id
+    GROUP BY usuario
     ORDER BY total_queries DESC;
 
-    FOR user_id_val, total_queries_val, query_val IN
-        SELECT user_id, total_queries_count, query
+    FOR user_val, total_queries_val, query_val IN
+        SELECT usuario, total_queries_count, query
         FROM top_users_with_queries
     LOOP
-        RAISE NOTICE 'User ID: % - Total Queries: %', user_id_val, total_queries_val;
+        RAISE NOTICE 'User ID: % - Total Queries: %', user_val, total_queries_val;
         RAISE NOTICE 'Queries:';
         RAISE NOTICE '%', query_val;
     END LOOP;
 END;
-$$ LANGUAGE plpgsql;
-
+$$ LANGUAGE plpgsql; 
 
 
