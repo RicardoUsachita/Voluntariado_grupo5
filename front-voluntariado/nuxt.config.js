@@ -51,7 +51,10 @@ export default {
     baseURL: 'http://localhost:3000',
     proxy: true,
   },
-
+  proxy: {
+    "/tarea": 'http://localhost:3000/',
+    "/emergencia": 'http://localhost:3000/',
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 }

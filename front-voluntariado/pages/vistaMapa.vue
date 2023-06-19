@@ -12,6 +12,7 @@
             />
           </a>
         </div>
+
         <div class="flex items-center gap-4">
           <NuxtLink to="/registroUsuario" class="cta-button">Registro</NuxtLink>
           <NuxtLink to="/loginUsuario" class="cta-button">Login</NuxtLink>
@@ -21,6 +22,9 @@
         </div>
       </nav>
     </header>
+    <div id="mapContainer">
+
+    </div>
     <footer class="flex items-center gap-4">
       <ul class="flex gap-4">
         <NuxtLink to="/" class="cta-button">Home</NuxtLink>
@@ -30,15 +34,138 @@
 </template>
 
 <script>
-import Map from "@/components/Map.vue";
+import "leaflet/dist/leaflet.css";
+import * as L from "leaflet";
+import axios from 'axios';
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'; // Re-uses images from ~leaflet package
+import 'leaflet-defaulticon-compatibility';
+
 
 export default {
-components: {
-    Map,
-},
-}
+  components: { },
+  name: "LeafletMap",
+  data() {
+    return {
+      map: null,
+      tasks: []
+    };
+  },
+
+  methods: {
+    getData: async function () {
+      try {
+        const response = await axios.get("/tarea");
+        this.tasks = response.data;
+
+        console.log(response);
+      } catch (error) {
+        console.log("Error: ", error);
+      }
+    },
+  },
+
+  mounted: async function() {
+    await this.getData();
+
+    this.map = L.map("mapContainer").setView([-33.45694, -70.64827], 5);
+    L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 10
+    }).addTo(this.map);
+
+    var tareaMarker = L.icon({
+      iconUrl: 'tarea.png',
+      iconSize:     [38, 80], // size of the icon
+      iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+      popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    var legend = L.control({position: "bottomright"});
+
+    legend.onAdd = function(map) {
+      var div = L.DomUtil.create("div", "legend");
+      div.innerHTML += '<h4>Marcadores</h4>';
+      div.innerHTML += '<i style="background: #0000FF"></i><span>Tarea</span><br>';
+
+      return div;
+    };
+
+    legend.addTo(this.map);
+
+    console.log(this.tasks);
+
+    this.tasks.forEach(task => {
+      var popupContent = "<hr>Nombre: </hr>" + task.nombre + "<hr>Descripción: </hr>" + task.descripcion
+        + "<hr>Fecha: </hr>" + task.fecha + "<hr>Requerimientos: </hr>" + task.requerimientos + "<hr>Longitud: </hr>" + task.longitude
+        + "<hr>Latitud: </hr>" + task.latitude + "<hr></hr>";
+
+      L.marker([task.latitude, task.longitude], {icon: tareaMarker}).bindPopup(popupContent).openPopup().addTo(this.map);
+
+
+    });
+  },
+
+  onBeforeUnmount() {
+    if (this.map) {
+      this.map.remove();
+    }
+  },
+};
 </script>
+
 <style>
+#mapContainer {
+  margin: 50px;
+  width: 90vw;
+  height: 90vh;
+}
+
+.heading {
+  margin: 0;
+  padding: 0px;
+  color:
+    rgb(69, 69, 121);
+}
+
+.heading > h1 {
+  padding: 20px;
+  margin: 0;
+}
+.legend {
+  padding: 6px 8px;
+  font: 14px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);*/
+  /*border-radius: 5px;*/
+  line-height: 24px;
+  color: #555;
+}
+.legend h4 {
+  text-align: center;
+  font-size: 16px;
+  margin: 2px 12px 8px;
+  color: #777;
+}
+
+.legend span {
+  position: relative;
+  bottom: 3px;
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin: 0 8px 0 0;
+  opacity: 0.7;
+}
+
+.legend i.circle {
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+}
 body {
   background-color: #FEE9E4;
   color: #2E5077;

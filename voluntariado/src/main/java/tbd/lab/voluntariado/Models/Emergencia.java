@@ -13,14 +13,16 @@ public class Emergencia {
     private Date fecha;
     private String reqs_grupales;
     private String reqs_individuales;
-    private long longitude;
-    private long latitude;
+    private Float longitude;
+    private Float latitude;
+
+    private long id_institucion;
 
     //CONSTRUCTOR Emergencia
     public Emergencia(){
     }
     //CONSTRUCTOR Emergencia
-    public Emergencia(long id, String nombre, String descripcion, java.sql.Date fecha, String reqs_grupales, String reqs_individuales, long longitude, long latitude){
+    public Emergencia(long id, String nombre, String descripcion, java.sql.Date fecha, String reqs_grupales, String reqs_individuales, Float longitude, Float latitude, long id_institucion){
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -29,6 +31,7 @@ public class Emergencia {
         this.reqs_individuales = reqs_individuales;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.id_institucion = id_institucion;
     }
 
     //GETTERS Emergencia
@@ -64,11 +67,11 @@ public class Emergencia {
     }
 
 
-    public long getLongitude() {
+    public Float getLongitude() {
         return longitude;
     }
 
-    public long getLatitude() {
+    public Float getLatitude() {
         return latitude;
     }
 
@@ -104,12 +107,12 @@ public class Emergencia {
     }
 
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
 

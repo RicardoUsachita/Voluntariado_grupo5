@@ -24,15 +24,15 @@ public class Tarea {
     private String descripcion;
     private java.sql.Date fecha;
     private String requerimientos;
-    private long longitude;
-    private long latitude;
+    private Float longitude;
+    private Float latitude;
 
     //CONSTRUCTOR TAREA
     public Tarea(){
     }
 
     //CONSTRUCTOR TAREA
-    public Tarea(long id, long id_emergencia, String nombre, String descripcion, java.sql.Date fecha, String requerimientos, long longitude, long latitude){
+    public Tarea(long id, long id_emergencia, String nombre, String descripcion, java.sql.Date fecha, String requerimientos, Float longitude, Float latitude){
         this.id = id;
         this.id_emergencia = id_emergencia;
         this.nombre = nombre;
@@ -76,12 +76,12 @@ public class Tarea {
     }
 
 
-    public long getLongitude() {
+    public Float getLongitude() {
         return longitude;
     }
 
 
-    public long getLatitude() {
+    public Float getLatitude() {
         return latitude;
     }
 
@@ -118,12 +118,12 @@ public class Tarea {
     }
 
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
 

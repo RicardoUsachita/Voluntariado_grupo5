@@ -11,7 +11,15 @@
             />
           </a>
         </div>
+        <div class="flex items-center gap-4">
+          <NuxtLink to="/registroUsuario" class="cta-button">Registro</NuxtLink>
+          <NuxtLink to="/loginUsuario" class="cta-button">Login</NuxtLink>
+          <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
+          <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
+          <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
+        </div>
       </header>
+      <div class="container">
       <h1>Formulario de Registro</h1>
 
       <form @submit.prevent="submitForm">
@@ -40,17 +48,10 @@
           <textarea id="atributos" v-model="formData.atributos" class="input-field"></textarea>
         </div>
 
-        <button type="submit" class="cta-button2">Registrarse</button>
+        <button type="submit" class="cta-button2 center">Registrarse</button>
       </form>
-      <footer class="container mx-auto p-4 flex justify-between border-t-2">
-        <ul class="flex gap-4">
-          <NuxtLink to="/" class="cta-button">Home</NuxtLink>
-          <NuxtLink to="/loginUsuario" class="cta-button">Login</NuxtLink>
-          <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
-          <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
-          <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
-        </ul>
-      </footer>
+      </div>
+
     </div>
   </template>
 
@@ -85,9 +86,11 @@ body {
   padding: 0;
 }
 .container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
 }
 body2 {
   background-color: #CA8F28;

@@ -12,7 +12,7 @@
         </a>
       </div>
     </header>
-
+    <div class="container">
     <h1 class="text-center">Ingreso de Emergencia</h1>
 
     <form @submit.prevent="submitForm" class="form">
@@ -70,15 +70,7 @@
         <li v-for="(task, index) in tasks" :key="index">{{ task }}</li>
       </ul>
     </div>
-    <footer class="container mx-auto p-4 flex justify-between border-t-2">
-      <ul class="flex gap-4">
-        <NuxtLink to="/" class="cta-button">Home</NuxtLink>
-        <NuxtLink to="/loginUsuario" class="cta-button">Login</NuxtLink>
-        <NuxtLink to="/registroEmergencia" class="cta-button">Registro Emergencia</NuxtLink>
-        <NuxtLink to="/vistaMapa" class="cta-button">Ver Mapa</NuxtLink>
-        <NuxtLink to="/listaEmergencia" class="cta-button">Emergencias</NuxtLink>
-      </ul>
-    </footer>
+  </div>
   </div>
 </template>
 
@@ -129,9 +121,11 @@ body {
   padding: 0;
 }
 .container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
 }
 body2 {
   background-color: #CA8F28;
@@ -219,7 +213,6 @@ h1 {
   padding: 10px 18px;
   background-color: #FDB35A;
   color: #fff;
-  font-family: ui-rounded, sans-serif;
   font-size: 15px;
   text-decoration: none;
   border-radius: 4px;
@@ -229,12 +222,10 @@ h1 {
 }
 .form-group {
   margin-bottom: 1em;
-  font-family: ui-rounded, sans-serif;
-  font-size: 1em;
-  color: #2E5077;
 }
 .input-field {
   font-size: 1.1em; /* Aumenta el tamaño de la fuente */
   padding: 0.5em; /* Ajusta el relleno para hacer el campo de entrada ligeramente más grande */
 }
+
 </style>
