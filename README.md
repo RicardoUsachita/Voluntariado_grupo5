@@ -43,8 +43,28 @@ Para montar la DB debe seguir los siguientes pasos:
 
 ### Montar el back-end 🚀:
 
-Para montar el back-end se debe abrir la carpeta "voluntariado" del proyecto con alguna IDE que soporte Java 17, se recomienda utilizar IntelliJ IDEA. Una vez abierta la carpeta, se debe ejecutar el archivo "VoluntariadoApplication.java" de la carpeta "voluntariado". Con esto el back-end ya se encontrará en funcionamiento.
+Antes de comenzar a levantar el proyecto, se debe tener en cuenta que se necesita tener Postgres configurado en el puerto 5432,
+que es el puerto por defecto, además de tener instalada la extensión de POSTGIS.
+1. Teniendo ya Postgres configurado, se debe crear una base de datos llamada "bd_val", necesariamente se debe llamar de esta forma para que el backend se conecte con la base de datos.
+2. Teniendo la base de datos creada se debe abrir una query y ejecutar la siguiente instrucción: 
+```
+"CREATE EXTENSION postgis;"
+```
+3. Luego en la misma query o en una distinta (como desee) ejecutar los comandos que se encuentran en los siguientes archivos y siguiendo este orden:
+    1. archivo "create_table.sql"
+    2. archivo "create_triggers.sql"
+    3. archivo "create_proc.sql"
+    4. archivo "import.sql"
+    5. archivo "division_regional.sql"
 
+4. Configurar el archivo "application.properties" que se encuentra en la ruta Lab1\voluntariado\src\main\resources\application.properties, con las credenciales que correspondan
+5. Para mayor comodidad se recomienda abrir el proyecto de backend en IntelliJ (abrir la carpeta voluntariado Lab1\voluntariado), y ejecutar desde el idle con el boton run 'VoluntariadoApplication'
+6. En caso de no tener IntelliJ o querer ocupar consola se debe ejecutar los siguientes comandos:
+```
+  -- mvn clean package
+  -- java -jar target/voluntariado-0.0.1-SNAPSHOT.jar
+```
+Y de esta manera se despliega el back
 ### Montar el front-end 🚀:
 
 Para iniciar el front se debe abrir la carpeta "front-voluntariado" del proyecto clonado, luego se debe abrir una terminal en la carpeta y ejecutar el siguiente comando para instalar las dependencias:

@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0c96c35-033c-4d27-abbc-d01db2fdda37" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/create_proc.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/create_table.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/create_triggers.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/division_regional.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/import.sql" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +49,7 @@
       <updated>1686864358669</updated>
       <workItem from="1686864362337" duration="56000" />
       <workItem from="1686864447689" duration="1388000" />
-      <workItem from="1687217380576" duration="1497000" />
+      <workItem from="1687217380576" duration="2369000" />
     </task>
     <servers />
   </component>
