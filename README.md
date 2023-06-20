@@ -30,16 +30,6 @@ Para poder ejecutar el proyecto se deben tener instaladas las siguientes herrami
     - PgAdmin 4
     
 Primeramente se debe clonar el repositorio proporcionado, dentro del cual se encontrarán las carpeta "voluntariado"(back-end), "front-voluntariado"(front-end) y "db" donde se podrán encontrar los scripts para crear y poblar la base de datos del programa.
-### Montar la base de datos 🚀:
-
-Para montar la DB debe seguir los siguientes pasos:
-1. Abrir pgAdmin 4
-2. Autenticarse con el usuario y contraseña correspondiente a su instalación de postgres, esta debe ser la misma que se encuentra en el archivo "application.properties" de la carpeta "voluntariado", en caso de ser distinta se debe cambiar en el archivo.
-3. Crear una nueva base de datos con el nombre "bd_vol"
-4. Seleccionar la base de datos creada y en la pestaña "Tools" seleccionar la opción "Query Tool"
-5. En la ventana que se abrirá, ejecutar el script del archivo "create_table.sql" que se encuentra en la carpeta "db" del proyecto.
-6. Luego ejecutar el scrip del archivo "import.sql" que se encuentra en la carpeta "db" del proyecto.
-7. Con esto la base de datos ya se encontrará creada y poblada con los datos necesarios para el funcionamiento base del programa.
 
 ### Montar el back-end 🚀:
 
@@ -50,7 +40,7 @@ que es el puerto por defecto, además de tener instalada la extensión de POSTGI
 ```
 "CREATE EXTENSION postgis;"
 ```
-3. Luego en la misma query o en una distinta (como desee) ejecutar los comandos que se encuentran en los siguientes archivos y siguiendo este orden:
+3. Luego en la misma query o en una distinta (como desee) ejecutar los comandos que se encuentran en los siguientes archivos de la carpeta "db" del proyecto, y siguiendo este orden:
     1. archivo "create_table.sql"
     2. archivo "create_triggers.sql"
     3. archivo "create_proc.sql"
